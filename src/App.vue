@@ -3,7 +3,7 @@ import Board from "./components/Board.vue";
 </script>
 
 <template>
-  <div id="app">
+  <div  id="app">
     <Board />
   </div>
 </template>

@@ -35,9 +35,15 @@ const cards = computed({
 
 <template>
   <div class="list">
-    <div class="listheader">
+    <div class="w-72 flex justify-start items-center">
       <p class="list-title">{{ props.title }}</p>
-      <p class="list-counter">total:{{ totalCardList }}</p>
+      <span
+        class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-500"
+      >
+        <span class="text-sm font-medium leading-none text-white">{{
+          totalCardList
+        }}</span>
+      </span>
       <div class="deletelist" @click="removeList">✖️</div>
     </div>
     <draggable v-model="cards" item-key="id" group="cards">

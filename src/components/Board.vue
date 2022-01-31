@@ -23,7 +23,7 @@ const movingList = () => {
   <div>
     <header>My Trello</header>
     <main>
-      <p class="info-line">All: {{ totalCardCounts }} tasks</p>
+      <p class="info-line text-white">All: {{ totalCardCounts }} tasks</p>
       <div>
         <draggable
           v-model="store.lists"

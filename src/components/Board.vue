@@ -14,6 +14,7 @@ const totalCardCounts = computed(() => {
 watch(store.lists, () => {
   store.updateLists(store.lists);
 });
+
 const movingList = () => {
   store.updateLists(store.lists);
 };

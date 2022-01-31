@@ -7,12 +7,14 @@ const props = defineProps({
 });
 const body = ref("");
 const isEditing = ref(false);
+const isOpenForm = ref(false)
 
 const store = useStore();
 
 const addCardToList = () => {
   store.addCardToList(body.value, props.listIndex);
   body.value = "";
+  isOpenForm.value = false
 };
 
 const classList = computed(() => {
@@ -27,7 +29,11 @@ const classList = computed(() => {
 });
 </script>
 <template>
-  <form :class="classList" class="addcard" @submit.prevent="addCardToList">
+  <div  @click="isOpenForm = true">
+    <span class="text-sm font-medium leading-none text-white">+</span>
+    Add item
+  </div>
+  <form v-show="isOpenForm" :class="classList" @submit.prevent="addCardToList">
     <input
       type="text"
       v-model="body"
@@ -38,7 +44,7 @@ const classList = computed(() => {
     />
     <button
       type="submit"
-      class="add-button"
+      class="add-button p-3"
       v-if="isEditing || body.length > 0"
     >
       Add

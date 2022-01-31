@@ -34,7 +34,7 @@ const cards = computed({
 </script>
 
 <template>
-  <div class="list">
+  <div class="list bg-black list-border-width border-white">
     <div class="w-72 flex justify-start items-center">
       <p class="list-title">{{ props.title }}</p>
       <span
@@ -59,3 +59,9 @@ const cards = computed({
     <CardAdd :listIndex="props.listIndex" />
   </div>
 </template>
+
+<style scoped>
+  .list-border-width{
+    border-width: 0.3px;
+  }
+</style>

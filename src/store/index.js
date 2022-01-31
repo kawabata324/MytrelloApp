@@ -30,8 +30,8 @@ export const useStore = defineStore("store", {
       this.lists.splice(index, 1);
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
-    addCardToList(body, listIndex) {
-      this.lists[listIndex].cards.push({ body: body });
+    addCardToList(body, contents, listIndex) {
+      this.lists[listIndex].cards.push({ body: body, contents: contents });
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     removeCardFromList(cardIndex, listIndex) {
@@ -43,4 +43,5 @@ export const useStore = defineStore("store", {
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
   },
+  
 });

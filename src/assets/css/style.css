@@ -45,9 +45,7 @@ main {
 }
 
 .text-input {
-  padding: 10px 15px;
-  width: calc(100% - 30px);
-  background-color: #ccc;
+  background-color: #e2e8f0;
   border-radius: 8px;
   cursor: pointer;
   border: none;
@@ -63,7 +61,6 @@ main {
   outline: 0;
   cursor: initial;
 }
-
 
 .add-button:hover {
   opacity: 0.8;
@@ -119,7 +116,6 @@ main {
   opacity: 0.8;
   cursor: pointer;
 }
-
 
 .body {
   font-size: 18px;

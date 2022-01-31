@@ -48,11 +48,13 @@ const cards = computed({
     </div>
     <draggable v-model="cards" item-key="id" group="cards">
       <template #item="{ element, index }">
-        <Card
-          :body="element.body"
-          :cardIndex="index"
-          :listIndex="props.listIndex"
-        />
+        <div>
+          <Card
+            :body="element.body"
+            :cardIndex="index"
+            :listIndex="props.listIndex"
+          />
+        </div>
       </template>
     </draggable>
 
@@ -61,7 +63,7 @@ const cards = computed({
 </template>
 
 <style scoped>
-  .list-border-width{
-    border-width: 0.3px;
-  }
+.list-border-width {
+  border-width: 0.5px;
+}
 </style>

@@ -1,16 +1,25 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "../store/index";
-
-// const modalRef = ref(false)
 
 const props = defineProps({
   body: { type: String, required: true },
+  contents: { type: String },
   listIndex: { type: Number, required: true },
   cardIndex: { type: Number, required: true },
 });
 
 const store = useStore();
+
+const cutContents = computed(() => {
+  const characterLimit = 10;
+  if (props.contents) {
+    if (props.contents.length > characterLimit) {
+      return (`${props.contents.substring(0, characterLimit)}...`);
+    }
+    return props.contents;
+  }
+});
 
 const removeCardFromList = () => {
   if (confirm("本当にこのカードを削除しますか？")) {
@@ -19,13 +28,12 @@ const removeCardFromList = () => {
 };
 </script>
 <template>
-  <div class="bg-gray-800 rounded-md w-64 my-2 py-6 px-3 ">
-    <p>#{{cardIndex}}</p>
-    <div
-      class="flex items-center text-white"
-    >
+  <div class="bg-gray-800 rounded-md w-64 my-2 py-6 px-3">
+    <p>#{{ cardIndex }}</p>
+    <div class="flex items-center text-white">
       <div class="body">
         {{ props.body }}
+        <p class="text-sm">{{ cutContents }}</p>
       </div>
       <div
         @click="removeCardFromList"

@@ -51,6 +51,7 @@ const cards = computed({
         <div>
           <Card
             :body="element.body"
+            :contents="element.contents"
             :cardIndex="index"
             :listIndex="props.listIndex"
           />

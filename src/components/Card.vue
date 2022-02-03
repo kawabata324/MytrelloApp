@@ -4,6 +4,7 @@ import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
 
 const props = defineProps({
+  id: { type: Number },
   body: { type: String, required: true },
   contents: { type: String },
   listIndex: { type: Number, required: true },
@@ -37,10 +38,15 @@ const openEditRef = ref(false);
     :cardIndex="props.cardIndex"
   />
   <div class="bg-gray-800 rounded-md w-64 my-2 py-6 px-3">
-    <p>#{{ cardIndex }}</p>
+    <p>#{{ props.id }}</p>
     <div class="flex items-center text-white">
-      <div class="body" >
-        <p class="text-blue-500 hover:cursor-pointer" @click="openEditRef = !openEditRef">{{ props.body }}</p>
+      <div class="body">
+        <p
+          class="text-blue-500 hover:cursor-pointer"
+          @click="openEditRef = !openEditRef"
+        >
+          {{ props.body }}
+        </p>
         <a class="text-sm">{{ cutContents }}</a>
       </div>
       <div

@@ -6,24 +6,24 @@ const props = defineProps({
   listIndex: { type: Number, required: true },
 });
 const body = ref("");
-const contents = ref("")
+const contents = ref("");
 const isEditing = ref(false);
 const isOpenForm = ref(false);
 
 const store = useStore();
 
 const addCardToList = () => {
-  store.addCardToList(body.value,contents.value, props.listIndex);
+  store.addCardToList(body.value, contents.value, props.listIndex);
   body.value = "";
-  contents.value = ""
+  contents.value = "";
   isOpenForm.value = false;
 };
 
-const cancel = ()=>{
-  body.value = ''
-  contents.value = ''
-  isOpenForm.value = false
-}
+const cancel = () => {
+  body.value = "";
+  contents.value = "";
+  isOpenForm.value = false;
+};
 
 const classList = computed(() => {
   const classList = [];
@@ -35,6 +35,7 @@ const classList = computed(() => {
   }
   return classList;
 });
+
 </script>
 <template>
   <div @click="isOpenForm = !isOpenForm">
@@ -44,10 +45,13 @@ const classList = computed(() => {
   <form
     v-show="isOpenForm"
     :class="classList"
-    class="flex flex-col items-center fixed top-0 right-0  w-72 z-50 bg-gray-700 rounded-md border"
+    class="flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"
   >
-  <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-    <label id="title" class="mt-10">CardTitle</label>
+    <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
+      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-signature"></i>
+        <p>CardTitle</p></label
+      >
       <input
         type="text"
         v-model="body"
@@ -56,9 +60,12 @@ const classList = computed(() => {
         @focusout="isEditing = false"
         for="title"
       />
-  </div>
+    </div>
     <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="title" class="mt-10">Contents</label>
+      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-align-right"></i>
+        <p>Contents</p></label
+      >
       <textarea
         type="text"
         v-model="contents"
@@ -75,7 +82,7 @@ const classList = computed(() => {
       <button
         @click.prevent="addCardToList"
         type="submit"
-        class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white"
+        class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"
       >
         Add
       </button>

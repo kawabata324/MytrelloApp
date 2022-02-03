@@ -50,6 +50,7 @@ const cards = computed({
       <template #item="{ element, index }">
         <div>
           <Card
+            :id="element.id"
             :body="element.body"
             :contents="element.contents"
             :cardIndex="index"

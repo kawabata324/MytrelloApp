@@ -31,7 +31,7 @@ const cancel = () => {
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <div
       class="flex items-center justify-center border border-dashed mt-3"
       @click="isForm = !isForm"
@@ -43,22 +43,27 @@ const cancel = () => {
     <form
       v-show="isForm"
       :class="classList"
-      class="flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"
+      class="flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72  bg-gray-700 rounded-md border"
     >
       <div class="flex flex-col justify-center items-start mx-3">
-        <label id="title" class="mt-10 text-slate-400">ListTitle</label>
+        <label
+          id="title"
+          class="mt-2 text-white text-lg flex gap-2 items-center"
+          ><i class="fas fa-signature"></i>
+          <p>ListTitle</p></label
+        >
         <input
           type="text"
           for="title"
           v-model="title"
-          class="text-input mt-2 py-3 px-4 w-full"
+          class="text-input mt-1 py-3 px-4 w-full text-black"
           placeholder="Add new list"
           @focusin="isEditing = true"
           @focusout="isEditing = false"
         />
       </div>
 
-      <div class="flex m-8 justify-between w-10/12">
+      <div class="flex my-3  justify-between w-10/12">
         <button
           @click.prevent="cancel"
           class="p-2 rounded-md bg-gray-400 text-white"
@@ -68,7 +73,7 @@ const cancel = () => {
         <button
           @click.prevent="addList"
           type="submit"
-          class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white"
+          class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"
         >
           Add
         </button>

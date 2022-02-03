@@ -60,6 +60,10 @@ const cancel = () => {
   newBody.value = "";
   newContents.value = "";
 };
+
+const listName = computed(() => {
+  return store.searchListFromListIndex(props.listIndex).title;
+});
 </script>
 <template>
   <form
@@ -67,7 +71,10 @@ const cancel = () => {
     class="flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"
   >
     <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="title" class="mt-10">CardTitle</label>
+      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-signature"></i>
+        <p>CardTitle</p></label
+      >
       <input
         type="text"
         v-model="bodyComputed"
@@ -76,9 +83,15 @@ const cancel = () => {
         @focusout="isEditing = false"
         for="title"
       />
+      <div class="mt-4">
+        <p>リスト:{{ listName }}</p>
+      </div>
     </div>
     <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="title" class="mt-10">Contents</label>
+      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-align-right"></i>
+        <p>Contents</p></label
+      >
       <textarea
         type="text"
         v-model="contentsComputed"
@@ -95,7 +108,7 @@ const cancel = () => {
       <button
         type="submit"
         @click.prevent="editCard"
-        class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white"
+        class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"
       >
         Edit
       </button>

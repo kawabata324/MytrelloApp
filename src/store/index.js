@@ -7,6 +7,7 @@ export const useStore = defineStore("store", {
   state: () => {
     return {
       lists: savedLists ? JSON.parse(savedLists) : [],
+      countID: 0,
     };
   },
   //gettersはstate及び他の getterへのアクセス可能
@@ -31,7 +32,8 @@ export const useStore = defineStore("store", {
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     addCardToList(body, contents, listIndex) {
-      this.lists[listIndex].cards.push({ body: body, contents: contents });
+      this.countID ++;
+      this.lists[listIndex].cards.push({id: this.countID, body: body, contents: contents });
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     removeCardFromList(cardIndex, listIndex) {
@@ -42,6 +44,10 @@ export const useStore = defineStore("store", {
       this.lists = lists;
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
+    editCard(listIndex, cardIndex, body, contents) {
+      this.lists[listIndex].cards[cardIndex].body = body;
+      this.lists[listIndex].cards[cardIndex].contents = contents;
+      localStorage.setItem("trello-lists", JSON.stringify(this.lists));
+    },
   },
-  
 });

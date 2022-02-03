@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import PrimeVue from "primevue/config"
 
 const pinia = createPinia();
 
@@ -15,5 +16,6 @@ dom.watch();
 createApp(App)
   .use(Style)
   .use(pinia)
+  .use(PrimeVue)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

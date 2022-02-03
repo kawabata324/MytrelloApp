@@ -46,23 +46,23 @@ const classList = computed(() => {
     :class="classList"
     class="flex flex-col items-center fixed top-0 right-0  w-72 z-50 bg-gray-700 rounded-md border"
   >
-  <div class="flex flex-col justify-center items-start mx-3">
+  <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
     <label id="title" class="mt-10">CardTitle</label>
       <input
         type="text"
         v-model="body"
-        class="text-input mt-2 py-3 px-4 w-full"
+        class="text-input mt-2 py-3 px-4 text-black w-full"
         @focusin="isEditing = true"
         @focusout="isEditing = false"
         for="title"
       />
   </div>
-    <div class="flex flex-col justify-center items-start mx-3">
+    <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
       <label id="title" class="mt-10">Contents</label>
       <textarea
         type="text"
         v-model="contents"
-        class="text-input w-full mt-2 h-96"
+        class="text-black text-input w-full mt-2 h-96 font-light leading-relaxed tracking-wider px-2"
       />
     </div>
     <div class="flex m-8 justify-between w-10/12">

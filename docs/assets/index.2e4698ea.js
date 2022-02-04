@@ -1,4 +1,4 @@
-import{d as J,r as f,c as b,o as _,a as k,w as h,v as C,b as n,t as w,e as j,f as z,g as S,n as F,u as p,h as N,F as A,i as L,j as y,p as P,k as B,l as E,m as R,q as K,s as H,x as G,_ as Q,y as W,z as X,P as Y,A as Z}from"./vendor.8b5ee2e8.js";const nn=function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))r(s);new MutationObserver(s=>{for(const i of s)if(i.type==="childList")for(const a of i.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&r(a)}).observe(document,{childList:!0,subtree:!0});function e(s){const i={};return s.integrity&&(i.integrity=s.integrity),s.referrerpolicy&&(i.referrerPolicy=s.referrerpolicy),s.crossorigin==="use-credentials"?i.credentials="include":s.crossorigin==="anonymous"?i.credentials="omit":i.credentials="same-origin",i}function r(s){if(s.ep)return;s.ep=!0;const i=e(s);fetch(s.href,i)}};nn();const O=localStorage.getItem("trello-lists"),U=localStorage.getItem("countID"),$=J("store",{state:()=>({lists:O?JSON.parse(O):[],countID:U?JSON.parse(U):0}),getters:{totalCardCounts(o){let t=0;for(const e of o.lists)t+=e.cards.length;return t}},actions:{addList(o){this.lists.push({title:o,cards:[]}),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},removeList(o){this.lists.splice(o,1),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},addCardToList(o,t){this.countID++,this.lists[t].cards.push({id:this.countID,body:o}),localStorage.setItem("countID",JSON.stringify(this.countID)),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},removeCardFromList(o,t){this.lists[t].cards.splice(o,1),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},updateLists(o){this.lists=o,localStorage.setItem("trello-lists",JSON.stringify(this.lists))},editCard(o,t,e,r,s){this.lists[o].cards[t].body=e,this.lists[o].cards[t].contents=r,this.lists[o].cards[t].date=s,localStorage.setItem("trello-lists",JSON.stringify(this.lists))},searchListFromListIndex(o){return this.lists[o]}}}),tn={class:"relative"},en=n("i",{class:"fas fa-plus"},null,-1),sn=N(" Add List "),on=[en,sn],rn={class:"flex flex-col justify-center items-start mx-3"},an=n("label",{id:"title",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"ListTitle")],-1),ln={class:"text-red-500"},dn=["onKeydown"],cn={class:"flex my-3 justify-between w-10/12"},un=["onClick"],pn=["onClick"],M={setup(o){const t=f(""),e=f(!1),r=f(!1),s=f(""),i=$(),a=()=>{t.value?(i.addList(t.value),t.value="",r.value=!1):s.value="\u30EA\u30B9\u30C8\u30BF\u30A4\u30C8\u30EB\u304C\u7A7A\u3067\u3059"},l=b(()=>{const m=[];return e.value&&m.push("active"),t.value.length&&m.push("addable"),m}),g=()=>{r.value=!1};return(m,c)=>(_(),k("div",tn,[h(n("div",{class:"flex items-center justify-center border border-dashed mt-3",onClick:c[0]||(c[0]=u=>r.value=!r.value)},on,512),[[C,!r.value]]),h(n("form",{class:F([p(l),"flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72 bg-gray-700 rounded-md border"])},[n("div",rn,[an,n("p",ln,w(s.value),1),h(n("input",{type:"text",for:"title","onUpdate:modelValue":c[1]||(c[1]=u=>t.value=u),class:"text-input mt-1 py-3 px-4 w-full text-black",placeholder:"Add new list",onKeydown:j(a,["enter"]),onFocusin:c[2]||(c[2]=u=>e.value=!0),onFocusout:c[3]||(c[3]=u=>e.value=!1)},null,40,dn),[[z,t.value]])]),n("div",cn,[n("button",{onClick:S(g,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,un),n("button",{onClick:S(a,["prevent"]),type:"submit",class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Add ",8,pn)])],2),[[C,r.value]])]))}},mn=n("span",{class:"text-sm font-medium leading-none text-white"},"+",-1),gn=N(" Add item "),fn=[mn,gn],hn={class:"flex flex-col justify-center items-start w-full p-3"},bn=n("label",{id:"title",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"CardTitle")],-1),xn=["onKeydown"],wn={class:"flex m-3 justify-between w-10/12"},yn=["onClick"],vn=["onClick"],_n={props:{listIndex:{type:Number,required:!0}},setup(o){const t=o,e=f(""),r=f(!1),s=f(!1),i=f(""),a=$(),l=()=>{e.value!==""?(a.addCardToList(e.value,t.listIndex),e.value="",s.value=!1):i.value="\u30BF\u30A4\u30C8\u30EB\u306B\u306F\u5FC5\u305A\u6587\u5B57\u3092\u5165\u308C\u3066\u304F\u3060\u3055\u3044"},g=()=>{e.value="",i.value=!1,s.value=!1},m=b(()=>{const c=[];return r.value&&c.push("active"),e.value.length&&c.push("addable"),c});return(c,u)=>(_(),k(A,null,[n("div",{class:"relative",onClick:u[0]||(u[0]=I=>s.value=!s.value)},fn),h(n("form",{class:F([p(m),"flex flex-col items-center absolute right-0.5 -bottom-48 w-72 z-50 bg-gray-700 rounded-md border"])},[n("div",hn,[bn,h(n("input",{type:"text","onUpdate:modelValue":u[1]||(u[1]=I=>e.value=I),class:"text-input mt-1 py-3 px-4 text-black w-full",onKeydown:j(l,["enter"]),onFocusin:u[2]||(u[2]=I=>r.value=!0),onFocusout:u[3]||(u[3]=I=>r.value=!1),for:"title"},null,40,xn),[[z,e.value]]),h(n("p",{class:"text-red-500"},w(i.value),513),[[C,i.value]])]),n("div",wn,[n("button",{onClick:S(g,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,yn),n("button",{onClick:S(l,["prevent"]),type:"submit",class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Add ",8,vn)])],2),[[C,s.value]])],64))}},kn={class:"flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"},Cn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},In=n("label",{id:"title",class:"mt-10 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"CardTitle")],-1),Sn={class:"text-red-500"},$n={class:"mt-4"},zn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},Ln=n("label",{id:"date",class:"mt-1 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-align-right"}),n("p",null,"DeadLine")],-1),jn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},Fn=n("label",{id:"contents",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-align-right"}),n("p",null,"Contents")],-1),Nn={class:"flex m-8 justify-between w-10/12"},An=["onClick"],En=["onClick"],Rn={props:{openEditRef:{type:Boolean},listIndex:{type:Number,required:!0},cardIndex:{type:Number,required:!0}},setup(o,{emit:t}){const e=o,r=f(""),s=f(""),i=f(""),a=f(""),l=$(),g=b({get:()=>e.openEditRef,set:d=>t("update:openEditRef",d)}),m=b({get:()=>{const d=l.lists[e.listIndex].cards[e.cardIndex].body;return r.value=d,d},set:d=>{r.value=d}}),c=b({get:()=>{const d=l.lists[e.listIndex].cards[e.cardIndex].contents;return s.value=d,d},set:d=>{s.value=d}}),u=b({get:()=>{const d=l.lists[e.listIndex].cards[e.cardIndex].date;return i.value=d,d!==void 0?d:null},set:d=>{i.value=d}}),I=()=>{r.value!==""?(l.editCard(e.listIndex,e.cardIndex,r.value,s.value,i.value),g.value=!1):a.value="CardTitle\u3092\u7A7A\u306B\u3059\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"},T=()=>{g.value=!1},q=b(()=>l.searchListFromListIndex(e.listIndex).title);return(d,x)=>h((_(),k("form",kn,[n("div",Cn,[In,n("p",Sn,w(a.value),1),h(n("input",{type:"text","onUpdate:modelValue":x[0]||(x[0]=v=>L(m)?m.value=v:null),class:"text-input mt-2 py-3 px-4 w-full text-black",onFocusin:x[1]||(x[1]=v=>d.isEditing=!0),onFocusout:x[2]||(x[2]=v=>d.isEditing=!1),for:"title"},null,544),[[z,p(m)]]),n("div",$n,[n("p",null,"\u30EA\u30B9\u30C8:"+w(p(q)),1)])]),n("div",zn,[Ln,h(n("input",{type:"date",form:"date","onUpdate:modelValue":x[3]||(x[3]=v=>L(u)?u.value=v:null),class:"text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"},null,512),[[z,p(u)]])]),n("div",jn,[Fn,h(n("textarea",{type:"text","onUpdate:modelValue":x[4]||(x[4]=v=>L(c)?c.value=v:null),class:"text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"},null,512),[[z,p(c)]])]),n("div",Nn,[n("button",{onClick:S(T,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,An),n("button",{type:"submit",onClick:S(I,["prevent"]),class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Edit ",8,En)])],512)),[[C,p(g)]])}};var V=(o,t)=>{const e=o.__vccOpts||o;for(const[r,s]of t)e[r]=s;return e};const D=o=>(P("data-v-c67f20a6"),o=o(),B(),o),On={class:"bg-gray-800 rounded-md w-64 my-2 py-6 px-3"},Un={class:"flex items-center text-white"},Mn={class:"body"},Vn={class:"text-sm"},Dn=D(()=>n("i",{class:"fas fa-trash bg-black text-red-500 w-1"},null,-1)),Tn=D(()=>n("p",{class:"text-sm"},"Delete",-1)),qn=[Dn,Tn],Jn={props:{id:{type:Number},body:{type:String,required:!0},contents:{type:String},listIndex:{type:Number,required:!0},cardIndex:{type:Number,required:!0}},setup(o){const t=o,e=$(),r=b(()=>{const a=10;if(t.contents)return t.contents.length>a?`${t.contents.substring(0,a)}...`:t.contents}),s=()=>{confirm("\u672C\u5F53\u306B\u3053\u306E\u30AB\u30FC\u30C9\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F")&&e.removeCardFromList(t.cardIndex,t.listIndex)},i=f(!1);return(a,l)=>(_(),k(A,null,[y(Rn,{openEditRef:i.value,"onUpdate:openEditRef":l[0]||(l[0]=g=>i.value=g),listIndex:t.listIndex,cardIndex:t.cardIndex},null,8,["openEditRef","listIndex","cardIndex"]),n("div",On,[n("p",null,"#"+w(t.id),1),n("div",Un,[n("div",Mn,[n("p",{class:"text-blue-500 hover:cursor-pointer",onClick:l[1]||(l[1]=g=>i.value=!i.value)},w(t.body),1),n("a",Vn,w(p(r)),1)]),n("div",{onClick:s,class:"bg-gray-800 shadow sm:rounded-lg flex justify-between items-center p-2 w-32"},qn)])])],64))}};var Pn=V(Jn,[["__scopeId","data-v-c67f20a6"]]);const Bn={class:"list bg-black list-border-width border-white"},Kn={class:"w-72 flex justify-start items-center"},Hn={class:"list-title"},Gn={class:"inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-500"},Qn={class:"text-sm font-medium leading-none text-white"},Wn={props:{title:{type:String,required:!0},listIndex:{type:Number,required:!0},cards:{type:Array}},setup(o,{emit:t}){const e=o,r=$(),s=()=>{confirm("\u672C\u5F53\u306B\u3053\u306E\u30EA\u30B9\u30C8\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F")&&r.removeList(e.listIndex)},i=b(()=>e.cards.length),a=b({get:()=>e.cards,set:l=>{t("update:cards",l)}});return(l,g)=>(_(),k("div",Bn,[n("div",Kn,[n("p",Hn,w(e.title),1),n("span",Gn,[n("span",Qn,w(p(i)),1)]),n("div",{class:"deletelist",onClick:s},"\u2716\uFE0F")]),y(p(R),{modelValue:p(a),"onUpdate:modelValue":g[0]||(g[0]=m=>L(a)?a.value=m:null),"item-key":"id",group:"cards"},{item:E(({element:m,index:c})=>[n("div",null,[y(Pn,{id:m.id,body:m.body,contents:m.contents,cardIndex:c,listIndex:e.listIndex},null,8,["id","body","contents","cardIndex","listIndex"])])]),_:1},8,["modelValue"]),y(_n,{listIndex:e.listIndex},null,8,["listIndex"])]))}};var Xn=V(Wn,[["__scopeId","data-v-11eee838"]]);const Yn=n("header",null,"My Trello",-1),Zn={class:"info-line text-white"},nt={setup(o){const t=$(),e=b(()=>t.totalCardCounts);K(t.lists,()=>{t.updateLists(t.lists)});const r=()=>{t.updateLists(t.lists)};return(s,i)=>(_(),k("div",null,[Yn,n("main",null,[n("p",Zn,"All: "+w(p(e))+" tasks",1),n("div",null,[y(p(R),{modelValue:p(t).lists,"onUpdate:modelValue":i[0]||(i[0]=a=>p(t).lists=a),"item-key":"id",class:"list-index",onEnd:r},{item:E(({element:a,index:l})=>[n("div",null,[y(Xn,{title:a.title,listIndex:l,cards:a.cards,"onUpdate:cards":g=>a.cards=g},null,8,["title","listIndex","cards","onUpdate:cards"]),h(y(M,null,null,512),[[C,l===p(t).lists.length-1]])])]),_:1},8,["modelValue"]),h(y(M,null,null,512),[[C,p(t).lists.length===0]])])])]))}},tt={id:"app"},et={setup(o){return(t,e)=>(_(),k("div",tt,[y(nt)]))}};var st=`/*
+import{d as q,r as h,c as f,o as C,a as I,w as b,v as _,b as n,t as x,e as z,f as L,g as S,n as F,u as m,h as N,F as A,i as j,j as v,p as D,k as J,l as E,m as R,q as P,s as B,x as H,_ as G,y as Q,z as W,P as X,A as Y}from"./vendor.8b5ee2e8.js";const Z=function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))r(o);new MutationObserver(o=>{for(const i of o)if(i.type==="childList")for(const a of i.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&r(a)}).observe(document,{childList:!0,subtree:!0});function e(o){const i={};return o.integrity&&(i.integrity=o.integrity),o.referrerpolicy&&(i.referrerPolicy=o.referrerpolicy),o.crossorigin==="use-credentials"?i.credentials="include":o.crossorigin==="anonymous"?i.credentials="omit":i.credentials="same-origin",i}function r(o){if(o.ep)return;o.ep=!0;const i=e(o);fetch(o.href,i)}};Z();const O=localStorage.getItem("trello-lists"),U=localStorage.getItem("countID"),$=q("store",{state:()=>({lists:O?JSON.parse(O):[],countID:U?JSON.parse(U):0}),getters:{totalCardCounts(s){let t=0;for(const e of s.lists)t+=e.cards.length;return t}},actions:{addList(s){this.lists.push({title:s,cards:[]}),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},removeList(s){this.lists.splice(s,1),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},addCardToList(s,t){this.countID++,this.lists[t].cards.push({id:this.countID,body:s}),localStorage.setItem("countID",JSON.stringify(this.countID)),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},removeCardFromList(s,t){this.lists[t].cards.splice(s,1),localStorage.setItem("trello-lists",JSON.stringify(this.lists))},updateLists(s){this.lists=s,localStorage.setItem("trello-lists",JSON.stringify(this.lists))},editCard(s,t,e,r,o){this.lists[s].cards[t].body=e,this.lists[s].cards[t].contents=r,this.lists[s].cards[t].date=o,localStorage.setItem("trello-lists",JSON.stringify(this.lists))},searchListFromListIndex(s){return this.lists[s]}}}),nn={class:"relative"},tn=n("i",{class:"fas fa-plus"},null,-1),en=N(" Add List "),on=[tn,en],sn={class:"flex flex-col justify-center items-start mx-3"},rn=n("label",{id:"title",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"ListTitle")],-1),an={class:"text-red-500"},ln=["onKeydown"],dn={class:"flex my-3 justify-between w-10/12"},cn=["onClick"],un=["onClick"],M={setup(s){const t=h(""),e=h(!1),r=h(!1),o=h(""),i=$(),a=()=>{t.value?(i.addList(t.value),t.value="",r.value=!1):o.value="\u30EA\u30B9\u30C8\u30BF\u30A4\u30C8\u30EB\u304C\u7A7A\u3067\u3059"},d=f(()=>{const g=[];return e.value&&g.push("active"),t.value.length&&g.push("addable"),g}),c=()=>{r.value=!1};return(g,l)=>(C(),I("div",nn,[b(n("div",{class:"flex items-center justify-center border border-dashed mt-3",onClick:l[0]||(l[0]=p=>r.value=!r.value)},on,512),[[_,!r.value]]),b(n("form",{class:F([m(d),"flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72 bg-gray-700 rounded-md border"])},[n("div",sn,[rn,n("p",an,x(o.value),1),b(n("input",{type:"text",for:"title","onUpdate:modelValue":l[1]||(l[1]=p=>t.value=p),class:"text-input mt-1 py-3 px-4 w-full text-black",placeholder:"Add new list",onKeydown:z(a,["enter"]),onFocusin:l[2]||(l[2]=p=>e.value=!0),onFocusout:l[3]||(l[3]=p=>e.value=!1)},null,40,ln),[[L,t.value]])]),n("div",dn,[n("button",{onClick:S(c,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,cn),n("button",{onClick:S(a,["prevent"]),type:"submit",class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Add ",8,un)])],2),[[_,r.value]])]))}},pn=n("span",{class:"text-sm font-medium leading-none text-white"},"+",-1),mn=N(" Add item "),gn=[pn,mn],hn={class:"flex flex-col justify-center items-start w-full p-3"},fn=n("label",{id:"title",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"CardTitle")],-1),bn=["onKeydown"],xn={class:"flex m-3 justify-between w-10/12"},wn=["onClick"],yn=["onClick"],vn={props:{listIndex:{type:Number,required:!0}},setup(s){const t=s,e=h(""),r=h(!1),o=h(!1),i=h(""),a=$(),d=()=>{e.value!==""?(a.addCardToList(e.value,t.listIndex),e.value="",o.value=!1):i.value="\u30BF\u30A4\u30C8\u30EB\u306B\u306F\u5FC5\u305A\u6587\u5B57\u3092\u5165\u308C\u3066\u304F\u3060\u3055\u3044"},c=()=>{e.value="",i.value=!1,o.value=!1},g=f(()=>{const l=[];return r.value&&l.push("active"),e.value.length&&l.push("addable"),l});return(l,p)=>(C(),I(A,null,[n("div",{class:"relative",onClick:p[0]||(p[0]=y=>o.value=!o.value)},gn),b(n("form",{class:F([m(g),"flex flex-col items-center absolute right-0.5 -bottom-48 w-72 z-50 bg-gray-700 rounded-md border"])},[n("div",hn,[fn,b(n("input",{type:"text","onUpdate:modelValue":p[1]||(p[1]=y=>e.value=y),class:"text-input mt-1 py-3 px-4 text-black w-full",onKeydown:z(d,["enter"]),onFocusin:p[2]||(p[2]=y=>r.value=!0),onFocusout:p[3]||(p[3]=y=>r.value=!1),for:"title"},null,40,bn),[[L,e.value]]),b(n("p",{class:"text-red-500"},x(i.value),513),[[_,i.value]])]),n("div",xn,[n("button",{onClick:S(c,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,wn),n("button",{onClick:S(d,["prevent"]),type:"submit",class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Add ",8,yn)])],2),[[_,o.value]])],64))}},_n={class:"flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"},kn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},Cn=n("label",{id:"title",class:"mt-10 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-signature"}),n("p",null,"CardTitle")],-1),In={class:"text-red-500"},Sn=["onKeydown"],$n={class:"mt-4"},zn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},Ln=n("label",{id:"date",class:"mt-1 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-align-right"}),n("p",null,"DeadLine")],-1),jn=["onKeydown"],Fn={class:"flex flex-col justify-center items-start mx-3 w-full p-3"},Nn=n("label",{id:"contents",class:"mt-2 text-white text-lg flex gap-2 items-center"},[n("i",{class:"fas fa-align-right"}),n("p",null,"Contents")],-1),An=["onKeydown"],En={class:"flex m-8 justify-between w-10/12"},Rn=["onClick"],On=["onClick"],Un={props:{openEditRef:{type:Boolean},listIndex:{type:Number,required:!0},cardIndex:{type:Number,required:!0}},setup(s,{emit:t}){const e=s,r=h(""),o=h(""),i=h(""),a=h(""),d=$(),c=f({get:()=>e.openEditRef,set:u=>t("update:openEditRef",u)}),g=f({get:()=>{const u=d.lists[e.listIndex].cards[e.cardIndex].body;return r.value=u,u},set:u=>{r.value=u}}),l=f({get:()=>{const u=d.lists[e.listIndex].cards[e.cardIndex].contents;return o.value=u,u},set:u=>{o.value=u}}),p=f({get:()=>{const u=d.lists[e.listIndex].cards[e.cardIndex].date;return i.value=u,u!==void 0?u:null},set:u=>{i.value=u}}),y=()=>{r.value!==""?(d.editCard(e.listIndex,e.cardIndex,r.value,o.value,i.value),c.value=!1):a.value="CardTitle\u3092\u7A7A\u306B\u3059\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"},T=()=>{c.value=!1},K=f(()=>d.searchListFromListIndex(e.listIndex).title);return(u,w)=>b((C(),I("form",_n,[n("div",kn,[Cn,n("p",In,x(a.value),1),b(n("input",{type:"text","onUpdate:modelValue":w[0]||(w[0]=k=>j(g)?g.value=k:null),class:"text-input mt-2 py-3 px-4 w-full text-black",onKeydown:z(y,["enter"]),onFocusin:w[1]||(w[1]=k=>u.isEditing=!0),onFocusout:w[2]||(w[2]=k=>u.isEditing=!1),for:"title"},null,40,Sn),[[L,m(g)]]),n("div",$n,[n("p",null,"\u30EA\u30B9\u30C8:"+x(m(K)),1)])]),n("div",zn,[Ln,b(n("input",{type:"date",form:"date","onUpdate:modelValue":w[3]||(w[3]=k=>j(p)?p.value=k:null),onKeydown:z(y,["enter"]),class:"text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"},null,40,jn),[[L,m(p)]])]),n("div",Fn,[Nn,b(n("textarea",{type:"text","onUpdate:modelValue":w[4]||(w[4]=k=>j(l)?l.value=k:null),onKeydown:z(y,["enter"]),class:"text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"},null,40,An),[[L,m(l)]])]),n("div",En,[n("button",{onClick:S(T,["prevent"]),class:"p-2 rounded-md bg-gray-400 text-white"}," Cancel ",8,Rn),n("button",{type:"submit",onClick:S(y,["prevent"]),class:"add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"}," Edit ",8,On)])],512)),[[_,m(c)]])}};var V=(s,t)=>{const e=s.__vccOpts||s;for(const[r,o]of t)e[r]=o;return e};const Mn=s=>(D("data-v-5b73e647"),s=s(),J(),s),Vn={class:"bg-gray-800 rounded-md w-64 my-2 py-3 px-3"},Tn={class:"flex justify-between items-center"},Kn={class:"flex gap-1 items-center"},qn={class:"fas fa-clock text-white"},Dn={class:"flex items-center text-white mt-2"},Jn={class:"body"},Pn={class:"text-sm"},Bn=Mn(()=>n("i",{class:"fas fa-trash rounded-full text-red-500"},null,-1)),Hn=[Bn],Gn={props:{id:{type:Number},body:{type:String,required:!0},contents:{type:String},date:{type:String},listIndex:{type:Number,required:!0},cardIndex:{type:Number,required:!0}},setup(s){const t=s,e=$(),r=f(()=>{const d=10;return t.body.length>d?`${t.body.substring(0,d)}...`:t.body}),o=f(()=>{const d=10;if(t.contents)return t.contents.length>d?`${t.contents.substring(0,d)}...`:t.contents}),i=()=>{confirm("\u672C\u5F53\u306B\u3053\u306E\u30AB\u30FC\u30C9\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F")&&e.removeCardFromList(t.cardIndex,t.listIndex)},a=h(!1);return(d,c)=>(C(),I(A,null,[v(Un,{openEditRef:a.value,"onUpdate:openEditRef":c[0]||(c[0]=g=>a.value=g),listIndex:t.listIndex,cardIndex:t.cardIndex},null,8,["openEditRef","listIndex","cardIndex"]),n("div",Vn,[n("div",Tn,[n("p",null,"#"+x(t.id),1),n("div",Kn,[b(n("i",qn,null,512),[[_,t.date]]),n("p",null,x(t.date),1)])]),n("div",Dn,[n("div",Jn,[n("p",{class:"text-blue-500 hover:cursor-pointer text-2xl",onClick:c[1]||(c[1]=g=>a.value=!0)},x(m(r)),1),n("a",Pn,x(m(o)),1)]),n("div",{onClick:i,class:"shadow rounded-xl w-6 h-6 bg-gray-900 flex items-center justify-center p-4"},Hn)])])],64))}};var Qn=V(Gn,[["__scopeId","data-v-5b73e647"]]);const Wn={class:"list bg-black list-border-width border-white"},Xn={class:"w-72 flex justify-start items-center"},Yn={class:"list-title"},Zn={class:"inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500"},nt={class:"text-sm font-medium leading-none text-white"},tt={props:{title:{type:String,required:!0},listIndex:{type:Number,required:!0},cards:{type:Array}},setup(s,{emit:t}){const e=s,r=$(),o=()=>{confirm("\u672C\u5F53\u306B\u3053\u306E\u30EA\u30B9\u30C8\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F")&&r.removeList(e.listIndex)},i=f(()=>e.cards.length),a=f({get:()=>e.cards,set:c=>{t("update:cards",c)}}),d=f(()=>{const c=10;return e.title.length>c?`${e.title.substring(0,c)}...`:e.title});return(c,g)=>(C(),I("div",Wn,[n("div",Xn,[n("p",Yn,x(m(d)),1),n("span",Zn,[n("span",nt,x(m(i)),1)]),n("div",{class:"deletelist",onClick:o},"\u2716\uFE0F")]),v(m(R),{modelValue:m(a),"onUpdate:modelValue":g[0]||(g[0]=l=>j(a)?a.value=l:null),"item-key":"id",group:"cards"},{item:E(({element:l,index:p})=>[n("div",null,[v(Qn,{id:l.id,body:l.body,contents:l.contents,date:l.date,cardIndex:p,listIndex:e.listIndex},null,8,["id","body","contents","date","cardIndex","listIndex"])])]),_:1},8,["modelValue"]),v(vn,{listIndex:e.listIndex},null,8,["listIndex"])]))}};var et=V(tt,[["__scopeId","data-v-5d2ffb49"]]);const ot=n("header",null,"My Trello",-1),st={class:"info-line text-white"},it={setup(s){const t=$(),e=f(()=>t.totalCardCounts);P(t.lists,()=>{t.updateLists(t.lists)});const r=()=>{t.updateLists(t.lists)};return(o,i)=>(C(),I("div",null,[ot,n("main",null,[n("p",st,"All: "+x(m(e))+" tasks",1),n("div",null,[v(m(R),{modelValue:m(t).lists,"onUpdate:modelValue":i[0]||(i[0]=a=>m(t).lists=a),"item-key":"id",class:"list-index",onEnd:r},{item:E(({element:a,index:d})=>[n("div",null,[v(et,{title:a.title,listIndex:d,cards:a.cards,"onUpdate:cards":c=>a.cards=c},null,8,["title","listIndex","cards","onUpdate:cards"]),b(v(M,null,null,512),[[_,d===m(t).lists.length-1]])])]),_:1},8,["modelValue"]),b(v(M,null,null,512),[[_,m(t).lists.length===0]])])])]))}},rt={id:"app"},at={setup(s){return(t,e)=>(C(),I("div",rt,[v(it)]))}};var lt=`/*
 ! tailwindcss v3.0.18 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -502,20 +502,17 @@ Ensure the default browser behavior of the \`hidden\` attribute.
 .contents {
   display: contents;
 }
+.h-6 {
+  height: 1.5rem;
+}
 .h-96 {
   height: 24rem;
-}
-.h-8 {
-  height: 2rem;
 }
 .w-64 {
   width: 16rem;
 }
-.w-32 {
-  width: 8rem;
-}
-.w-1 {
-  width: 0.25rem;
+.w-6 {
+  width: 1.5rem;
 }
 .w-72 {
   width: 18rem;
@@ -525,9 +522,6 @@ Ensure the default browser behavior of the \`hidden\` attribute.
 }
 .w-10\\/12 {
   width: 83.333333%;
-}
-.w-8 {
-  width: 2rem;
 }
 .flex-col {
   flex-direction: column;
@@ -547,11 +541,17 @@ Ensure the default browser behavior of the \`hidden\` attribute.
 .justify-between {
   justify-content: space-between;
 }
+.gap-1 {
+  gap: 0.25rem;
+}
 .gap-2 {
   gap: 0.5rem;
 }
 .rounded-md {
   border-radius: 0.375rem;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 .rounded-full {
   border-radius: 9999px;
@@ -570,9 +570,9 @@ Ensure the default browser behavior of the \`hidden\` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
-.bg-black {
+.bg-gray-900 {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 .bg-gray-700 {
   --tw-bg-opacity: 1;
@@ -582,27 +582,30 @@ Ensure the default browser behavior of the \`hidden\` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
 .bg-gray-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
-.p-2 {
-  padding: 0.5rem;
+.p-4 {
+  padding: 1rem;
 }
 .p-3 {
   padding: 0.75rem;
 }
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+.p-2 {
+  padding: 0.5rem;
 }
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 .px-4 {
   padding-left: 1rem;
@@ -611,6 +614,10 @@ Ensure the default browser behavior of the \`hidden\` attribute.
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 .text-sm {
   font-size: 0.875rem;
@@ -781,11 +788,4 @@ main {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
-
-@media (min-width: 640px) {
-
-  .sm\\:rounded-lg {
-    border-radius: 0.5rem;
-  }
-}
-`;const ot=H();G.add(Q);W.watch();X(et).use(st).use(ot).use(Y).component("font-awesome-icon",Z).mount("#app");
+`;const dt=B();H.add(G);Q.watch();W(at).use(lt).use(dt).use(X).component("font-awesome-icon",Y).mount("#app");

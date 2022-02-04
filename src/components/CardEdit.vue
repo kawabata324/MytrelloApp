@@ -2,9 +2,10 @@
 import { computed, ref } from "vue";
 import { useStore } from "../store/index";
 
-const isEditing = ref(false);
 const newBody = ref("");
 const newContents = ref("");
+const newDeadline = ref("");
+const errorMessage = ref("");
 
 const store = useStore();
 
@@ -43,22 +44,38 @@ const contentsComputed = computed({
   },
 });
 
+const dateComputed = computed({
+  get: () => {
+    const deadLine = store.lists[props.listIndex].cards[props.cardIndex].date;
+    newDeadline.value = deadLine;
+    if (deadLine !== undefined) {
+      return deadLine;
+    } else {
+      return null;
+    }
+  },
+  set: (newValue) => {
+    newDeadline.value = newValue;
+  },
+});
+
 const editCard = () => {
-  store.editCard(
-    props.listIndex,
-    props.cardIndex,
-    newBody.value,
-    newContents.value
-  );
-  isOpenForm.value = false;
-  newBody.value = "";
-  newContents.value = "";
+  if (newBody.value !== "") {
+    store.editCard(
+      props.listIndex,
+      props.cardIndex,
+      newBody.value,
+      newContents.value,
+      newDeadline.value
+    );
+    isOpenForm.value = false;
+  } else {
+    errorMessage.value = "CardTitleを空にすることはできません";
+  }
 };
 
 const cancel = () => {
   isOpenForm.value = false;
-  newBody.value = "";
-  newContents.value = "";
 };
 
 const listName = computed(() => {
@@ -75,6 +92,7 @@ const listName = computed(() => {
         ><i class="fas fa-signature"></i>
         <p>CardTitle</p></label
       >
+      <p class="text-red-500">{{ errorMessage }}</p>
       <input
         type="text"
         v-model="bodyComputed"
@@ -88,14 +106,28 @@ const listName = computed(() => {
       </div>
     </div>
     <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+      <label id="date" class="mt-1 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-align-right"></i>
+        <p>DeadLine</p></label
+      >
+      <input
+        type="date"
+        form="date"
+        v-model="dateComputed"
+        class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
+      />
+    </div>
+    <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
+      <label
+        id="contents"
+        class="mt-2 text-white text-lg flex gap-2 items-center"
         ><i class="fas fa-align-right"></i>
         <p>Contents</p></label
       >
       <textarea
         type="text"
         v-model="contentsComputed"
-        class="text-input w-full mt-2 h-96 font-light text-black leading-relaxed tracking-wider px-2"
+        class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
       />
     </div>
     <div class="flex m-8 justify-between w-10/12">

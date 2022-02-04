@@ -2,7 +2,7 @@
 import { useStore } from "../store/index";
 import CardAdd from "./CardAdd.vue";
 import Card from "./Card.vue";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import draggable from "vuedraggable";
 
 const props = defineProps({
@@ -37,7 +37,7 @@ const cutTitle = computed(() => {
   if (props.title.length > characterLimit) {
     return `${props.title.substring(0, characterLimit)}...`;
   }
-  return props.title
+  return props.title;
 });
 </script>
 

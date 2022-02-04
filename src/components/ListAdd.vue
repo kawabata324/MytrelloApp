@@ -1,17 +1,22 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "../store/index";
 
 const title = ref("");
 const isEditing = ref(false);
 const isForm = ref(false);
+const errorMessage = ref("");
 
 const store = useStore();
 
 const addList = () => {
-  store.addList(title.value);
-  title.value = "";
-  isForm.value = false;
+  if(title.value){
+    store.addList(title.value);
+    title.value = "";
+    isForm.value = false;
+  }else{
+    errorMessage.value = 'リストタイトルが空です'
+  }
 };
 
 const classList = computed(() => {
@@ -28,6 +33,7 @@ const classList = computed(() => {
 const cancel = () => {
   isForm.value = false;
 };
+
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const cancel = () => {
     <form
       v-show="isForm"
       :class="classList"
-      class="flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72  bg-gray-700 rounded-md border"
+      class="flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72 bg-gray-700 rounded-md border"
     >
       <div class="flex flex-col justify-center items-start mx-3">
         <label
@@ -52,18 +58,20 @@ const cancel = () => {
           ><i class="fas fa-signature"></i>
           <p>ListTitle</p></label
         >
+        <p class="text-red-500">{{errorMessage}}</p>
         <input
           type="text"
           for="title"
           v-model="title"
           class="text-input mt-1 py-3 px-4 w-full text-black"
           placeholder="Add new list"
+          @keydown.enter="addList"
           @focusin="isEditing = true"
           @focusout="isEditing = false"
         />
       </div>
 
-      <div class="flex my-3  justify-between w-10/12">
+      <div class="flex my-3 justify-between w-10/12">
         <button
           @click.prevent="cancel"
           class="p-2 rounded-md bg-gray-400 text-white"

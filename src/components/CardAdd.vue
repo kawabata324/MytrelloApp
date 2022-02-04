@@ -58,6 +58,7 @@ const classList = computed(() => {
         type="text"
         v-model="body"
         class="text-input mt-1 py-3 px-4 text-black w-full"
+        @keydown.enter="addCardToList"
         @focusin="isEditing = true"
         @focusout="isEditing = false"
         for="title"

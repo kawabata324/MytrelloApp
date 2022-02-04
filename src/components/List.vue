@@ -2,7 +2,7 @@
 import { useStore } from "../store/index";
 import CardAdd from "./CardAdd.vue";
 import Card from "./Card.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import draggable from "vuedraggable";
 
 const props = defineProps({
@@ -60,7 +60,7 @@ const cards = computed({
       </template>
     </draggable>
 
-    <CardAdd :listIndex="props.listIndex" />
+    <CardAdd :listIndex="props.listIndex"  />
   </div>
 </template>
 

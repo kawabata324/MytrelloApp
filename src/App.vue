@@ -1,5 +1,6 @@
 <script setup>
 import Board from "./components/Board.vue";
+import CardEdit from "./components/CardEdit.vue";
 </script>
 
 <template>

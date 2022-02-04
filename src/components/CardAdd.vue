@@ -7,14 +7,25 @@ const props = defineProps({
 });
 const body = ref("");
 const isEditing = ref(false);
-const isOpenForm = ref(false)
+const isOpenForm = ref(false);
+const errorMessage = ref("");
 
 const store = useStore();
 
 const addCardToList = () => {
-  store.addCardToList(body.value, props.listIndex);
+  if (body.value !== "") {
+    store.addCardToList(body.value, props.listIndex);
+    body.value = "";
+    isOpenForm.value = false;
+  } else {
+    errorMessage.value = "タイトルには必ず文字を入れてください";
+  }
+};
+
+const cancel = () => {
   body.value = "";
-  isOpenForm.value = false
+  errorMessage.value = false;
+  isOpenForm.value = false;
 };
 
 const classList = computed(() => {
@@ -29,25 +40,45 @@ const classList = computed(() => {
 });
 </script>
 <template>
-  <div  @click="isOpenForm = true">
+  <div class="relative" @click="isOpenForm = !isOpenForm">
     <span class="text-sm font-medium leading-none text-white">+</span>
     Add item
   </div>
-  <form v-show="isOpenForm" :class="classList" class="flex items-center" @submit.prevent="addCardToList">
-    <input
-      type="text"
-      v-model="body"
-      class="text-input"
-      placeholder="Add new card"
-      @focusin="isEditing = true"
-      @focusout="isEditing = false"
-    />
-    <button
-      type="submit"
-      class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white"
-      v-if="isEditing || body.length > 0"
-    >
-      Add
-    </button>
+  <form
+    v-show="isOpenForm"
+    :class="classList"
+    class="flex flex-col items-center absolute right-0.5 -bottom-48 w-72 z-50 bg-gray-700 rounded-md border"
+  >
+    <div class="flex flex-col justify-center items-start w-full p-3">
+      <label id="title" class="mt-2 text-white text-lg flex gap-2 items-center"
+        ><i class="fas fa-signature"></i>
+        <p>CardTitle</p></label
+      >
+      <input
+        type="text"
+        v-model="body"
+        class="text-input mt-1 py-3 px-4 text-black w-full"
+        @keydown.enter="addCardToList"
+        @focusin="isEditing = true"
+        @focusout="isEditing = false"
+        for="title"
+      />
+      <p class="text-red-500" v-show="errorMessage">{{ errorMessage }}</p>
+    </div>
+    <div class="flex m-3 justify-between w-10/12">
+      <button
+        @click.prevent="cancel"
+        class="p-2 rounded-md bg-gray-400 text-white"
+      >
+        Cancel
+      </button>
+      <button
+        @click.prevent="addCardToList"
+        type="submit"
+        class="add-button p-2 ml-2 rounded-md bg-gray-400 text-white hover:bg-green-500"
+      >
+        Add
+      </button>
+    </div>
   </form>
 </template>

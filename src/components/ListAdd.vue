@@ -1,13 +1,18 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
 
 const title = ref("");
 const isEditing = ref(false);
 const isForm = ref(false);
 const errorMessage = ref("");
+const titleInput = ref(null);
 
 const store = useStore();
+
+const openAddListForm = () => {
+  isForm.value = !isForm.value;
+};
 
 const addList = () => {
   if (title.value) {
@@ -33,13 +38,16 @@ const classList = computed(() => {
 const cancel = () => {
   isForm.value = false;
 };
+onUpdated(() => {
+  titleInput.value.focus();
+});
 </script>
 
 <template>
   <div class="relative w-64">
     <div
       class="flex items-center justify-center border border-dashed bg-gray-600 gap-2 opacity-50"
-      @click="isForm = !isForm"
+      @click="openAddListForm"
       v-show="!isForm"
     >
       <i class="fas fa-plus"></i>
@@ -61,6 +69,7 @@ const cancel = () => {
         <input
           type="text"
           for="title"
+          ref="titleInput"
           v-model="title"
           class="text-input mt-1 py-3 px-4 w-full text-black"
           placeholder="Add new list"

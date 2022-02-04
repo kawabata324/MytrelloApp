@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onUpdated } from 'vue';
 import { useStore } from "../store/index";
 
 const props = defineProps({
@@ -9,6 +9,7 @@ const body = ref("");
 const isEditing = ref(false);
 const isOpenForm = ref(false);
 const errorMessage = ref("");
+const cardTitleInput = ref(null)
 
 const store = useStore();
 
@@ -38,6 +39,11 @@ const classList = computed(() => {
   }
   return classList;
 });
+
+onUpdated(()=>{
+  cardTitleInput.value.focus()
+})
+
 </script>
 <template>
   <div class="relative" @click="isOpenForm = !isOpenForm">
@@ -57,6 +63,7 @@ const classList = computed(() => {
       <input
         type="text"
         v-model="body"
+        ref="cardTitleInput"
         class="text-input mt-1 py-3 px-4 text-black w-full"
         @keydown.enter="addCardToList"
         @focusin="isEditing = true"

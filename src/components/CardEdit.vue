@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onUpdated } from 'vue';
 import { useStore } from "../store/index";
 
 const newBody = ref("");
@@ -7,6 +7,7 @@ const newContents = ref("");
 const newDeadline = ref("");
 const errorMessage = ref("");
 const moreOptionRef = ref(false);
+const titleInput = ref(null)
 
 const store = useStore();
 
@@ -91,6 +92,11 @@ const listName = computed(() => {
   }
   return title;
 });
+
+onUpdated(()=>{
+  titleInput.value.focus()
+})
+
 </script>
 <template>
   <form
@@ -108,6 +114,7 @@ const listName = computed(() => {
       <p class="text-red-500">{{ errorMessage }}</p>
       <input
         type="text"
+        ref="titleInput"
         v-model="bodyComputed"
         class="text-input mt-2 py-3 px-4 w-full text-black"
         @keydown.enter="editCard"

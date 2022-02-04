@@ -6,6 +6,7 @@ const newBody = ref("");
 const newContents = ref("");
 const newDeadline = ref("");
 const errorMessage = ref("");
+const moreOptionRef = ref(false);
 
 const store = useStore();
 
@@ -78,8 +79,17 @@ const cancel = () => {
   isOpenForm.value = false;
 };
 
+const computedMoreOption = computed(() => {
+  return moreOptionRef.value;
+});
+
 const listName = computed(() => {
-  return store.searchListFromListIndex(props.listIndex).title;
+  const limitCharacter = 10;
+  const title = store.searchListFromListIndex(props.listIndex).title;
+  if (title.length > limitCharacter) {
+    return `${title.substring(0, limitCharacter)}...`;
+  }
+  return title;
 });
 </script>
 <template>
@@ -88,7 +98,10 @@ const listName = computed(() => {
     class="flex flex-col items-center fixed top-0 right-0 w-72 z-50 bg-gray-700 rounded-md border"
   >
     <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="title" class="mt-10 text-white text-lg flex gap-2 items-center"
+      <div class="mt-4">
+        <p>リスト:{{ listName }}</p>
+      </div>
+      <label id="title" class="mt-3 text-white text-lg flex gap-2 items-center"
         ><i class="fas fa-signature"></i>
         <p>CardTitle</p></label
       >
@@ -102,38 +115,47 @@ const listName = computed(() => {
         @focusout="isEditing = false"
         for="title"
       />
-      <div class="mt-4">
-        <p>リスト:{{ listName }}</p>
+    </div>
+    <div
+      class="text-gray-900 flex items-center gap-2"
+      @click="moreOptionRef = !moreOptionRef"
+    >
+      <p class="text-xl">More Option</p>
+      <i v-show="computedMoreOption === false" class="fas fa-chevron-down"></i>
+    </div>
+    <div
+      class="flex flex-col justify-center items-start mx-3 w-full p-3"
+      v-show="moreOptionRef"
+    >
+      <div class="w-full">
+        <label id="date" class="mt-1 text-white text-lg flex gap-2 items-center"
+          ><i class="fas fa-align-right"></i>
+          <p>DeadLine</p></label
+        >
+        <input
+          type="date"
+          form="date"
+          v-model="dateComputed"
+          @keydown.enter="editCard"
+          class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
+        />
+      </div>
+      <div class="w-full">
+        <label
+          id="contents"
+          class="mt-2 text-white text-lg flex gap-2 items-center"
+          ><i class="fas fa-align-right"></i>
+          <p>Contents</p></label
+        >
+        <textarea
+          type="text"
+          v-model="contentsComputed"
+          @keydown.enter="editCard"
+          class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
+        />
       </div>
     </div>
-    <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label id="date" class="mt-1 text-white text-lg flex gap-2 items-center"
-        ><i class="fas fa-align-right"></i>
-        <p>DeadLine</p></label
-      >
-      <input
-        type="date"
-        form="date"
-        v-model="dateComputed"
-        @keydown.enter="editCard"
-        class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
-      />
-    </div>
-    <div class="flex flex-col justify-center items-start mx-3 w-full p-3">
-      <label
-        id="contents"
-        class="mt-2 text-white text-lg flex gap-2 items-center"
-        ><i class="fas fa-align-right"></i>
-        <p>Contents</p></label
-      >
-      <textarea
-        type="text"
-        v-model="contentsComputed"
-        @keydown.enter="editCard"
-        class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
-      />
-    </div>
-    <div class="flex m-8 justify-between w-10/12">
+    <div class="flex m-4 justify-between w-10/12">
       <button
         @click.prevent="cancel"
         class="p-2 rounded-md bg-gray-400 text-white"

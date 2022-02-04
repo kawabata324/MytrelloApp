@@ -22,7 +22,7 @@ const movingList = () => {
 
 <template>
   <div>
-    <header>My Trello</header>
+    <header>KeepMakingEfforts</header>
     <main>
       <p class="info-line text-white">All: {{ totalCardCounts }} tasks</p>
       <div>

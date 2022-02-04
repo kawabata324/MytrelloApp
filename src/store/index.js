@@ -32,12 +32,11 @@ export const useStore = defineStore("store", {
       this.lists.splice(index, 1);
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
-    addCardToList(body, contents, listIndex) {
+    addCardToList(body, listIndex) {
       this.countID++;
       this.lists[listIndex].cards.push({
         id: this.countID,
         body: body,
-        contents: contents,
       });
       localStorage.setItem("countID",JSON.stringify(this.countID))
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));

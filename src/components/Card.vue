@@ -14,6 +14,14 @@ const props = defineProps({
 
 const store = useStore();
 
+const cutBody = computed(() => {
+  const characterLimit = 10;
+  if (props.body.length > characterLimit) {
+    return `${props.body.substring(0, characterLimit)}...`;
+  }
+  return props.body;
+});
+
 const cutContents = computed(() => {
   const characterLimit = 10;
   if (props.contents) {
@@ -42,17 +50,17 @@ const openEditRef = ref(false);
     <div class="flex justify-between items-center">
       <p>#{{ props.id }}</p>
       <div class="flex gap-1 items-center">
-        <i class="fas fa-clock text-white"></i>
+        <i class="fas fa-clock text-white" v-show="props.date"></i>
         <p>{{ props.date }}</p>
       </div>
     </div>
-    <div class="flex items-center text-white">
+    <div class="flex items-center text-white mt-2">
       <div class="body">
         <p
           class="text-blue-500 hover:cursor-pointer text-2xl"
-          @click="openEditRef = !openEditRef"
+          @click="openEditRef = true"
         >
-          {{ props.body }}
+          {{ cutBody }}
         </p>
         <a class="text-sm">{{ cutContents }}</a>
       </div>
@@ -60,7 +68,7 @@ const openEditRef = ref(false);
         @click="removeCardFromList"
         class="shadow rounded-xl w-6 h-6 bg-gray-900 flex items-center justify-center p-4"
       >
-        <i class="fas fa-trash rounded-full   text-red-500 "></i>
+        <i class="fas fa-trash rounded-full text-red-500"></i>
       </div>
     </div>
   </div>

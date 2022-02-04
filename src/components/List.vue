@@ -31,12 +31,20 @@ const cards = computed({
     emit("update:cards", newValue);
   },
 });
+
+const cutTitle = computed(() => {
+  const characterLimit = 10;
+  if (props.title.length > characterLimit) {
+    return `${props.title.substring(0, characterLimit)}...`;
+  }
+  return props.title
+});
 </script>
 
 <template>
   <div class="list bg-black list-border-width border-white">
     <div class="w-72 flex justify-start items-center">
-      <p class="list-title">{{ props.title }}</p>
+      <p class="list-title">{{ cutTitle }}</p>
       <span
         class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500"
       >
@@ -61,7 +69,7 @@ const cards = computed({
       </template>
     </draggable>
 
-    <CardAdd :listIndex="props.listIndex"  />
+    <CardAdd :listIndex="props.listIndex" />
   </div>
 </template>
 

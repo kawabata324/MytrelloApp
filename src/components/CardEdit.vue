@@ -97,6 +97,7 @@ const listName = computed(() => {
         type="text"
         v-model="bodyComputed"
         class="text-input mt-2 py-3 px-4 w-full text-black"
+        @keydown.enter="editCard"
         @focusin="isEditing = true"
         @focusout="isEditing = false"
         for="title"
@@ -114,6 +115,7 @@ const listName = computed(() => {
         type="date"
         form="date"
         v-model="dateComputed"
+        @keydown.enter="editCard"
         class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
       />
     </div>
@@ -127,6 +129,7 @@ const listName = computed(() => {
       <textarea
         type="text"
         v-model="contentsComputed"
+        @keydown.enter="editCard"
         class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
       />
     </div>

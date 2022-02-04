@@ -42,7 +42,7 @@ const classList = computed(() => {
 <template>
   <div class="relative" @click="isOpenForm = !isOpenForm">
     <span class="text-sm font-medium leading-none text-white">+</span>
-    Add item
+    Add Card
   </div>
   <form
     v-show="isOpenForm"

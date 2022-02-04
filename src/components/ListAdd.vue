@@ -10,12 +10,12 @@ const errorMessage = ref("");
 const store = useStore();
 
 const addList = () => {
-  if(title.value){
+  if (title.value) {
     store.addList(title.value);
     title.value = "";
     isForm.value = false;
-  }else{
-    errorMessage.value = 'リストタイトルが空です'
+  } else {
+    errorMessage.value = "リストタイトルが空です";
   }
 };
 
@@ -33,13 +33,12 @@ const classList = computed(() => {
 const cancel = () => {
   isForm.value = false;
 };
-
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative w-64">
     <div
-      class="flex items-center justify-center border border-dashed mt-3"
+      class="flex items-center justify-center border border-dashed bg-gray-600 gap-2 opacity-50"
       @click="isForm = !isForm"
       v-show="!isForm"
     >
@@ -49,7 +48,7 @@ const cancel = () => {
     <form
       v-show="isForm"
       :class="classList"
-      class="flex flex-col items-center absolute -top-32 left-72 ml-4 mt-3 w-72 bg-gray-700 rounded-md border"
+      class="flex flex-col items-center ml-4 w-72 bg-gray-700 rounded-md border"
     >
       <div class="flex flex-col justify-center items-start mx-3">
         <label
@@ -58,7 +57,7 @@ const cancel = () => {
           ><i class="fas fa-signature"></i>
           <p>ListTitle</p></label
         >
-        <p class="text-red-500">{{errorMessage}}</p>
+        <p class="text-red-500">{{ errorMessage }}</p>
         <input
           type="text"
           for="title"

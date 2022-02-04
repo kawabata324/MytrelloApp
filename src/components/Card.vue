@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
 
@@ -7,6 +7,7 @@ const props = defineProps({
   id: { type: Number },
   body: { type: String, required: true },
   contents: { type: String },
+  date: { type: String },
   listIndex: { type: Number, required: true },
   cardIndex: { type: Number, required: true },
 });
@@ -37,12 +38,18 @@ const openEditRef = ref(false);
     :listIndex="props.listIndex"
     :cardIndex="props.cardIndex"
   />
-  <div class="bg-gray-800 rounded-md w-64 my-2 py-6 px-3">
-    <p>#{{ props.id }}</p>
+  <div class="bg-gray-800 rounded-md w-64 my-2 py-3 px-3">
+    <div class="flex justify-between items-center">
+      <p>#{{ props.id }}</p>
+      <div class="flex gap-1 items-center">
+        <i class="fas fa-clock text-white"></i>
+        <p>{{ props.date }}</p>
+      </div>
+    </div>
     <div class="flex items-center text-white">
       <div class="body">
         <p
-          class="text-blue-500 hover:cursor-pointer"
+          class="text-blue-500 hover:cursor-pointer text-2xl"
           @click="openEditRef = !openEditRef"
         >
           {{ props.body }}
@@ -51,10 +58,9 @@ const openEditRef = ref(false);
       </div>
       <div
         @click="removeCardFromList"
-        class="bg-gray-800 shadow sm:rounded-lg flex justify-between items-center p-2 w-32"
+        class="shadow rounded-xl w-6 h-6 bg-gray-900 flex items-center justify-center p-4"
       >
-        <i class="fas fa-trash bg-black text-red-500 w-1"></i>
-        <p class="text-sm">Delete</p>
+        <i class="fas fa-trash rounded-full   text-red-500 "></i>
       </div>
     </div>
   </div>

@@ -38,7 +38,7 @@ const cards = computed({
     <div class="w-72 flex justify-start items-center">
       <p class="list-title">{{ props.title }}</p>
       <span
-        class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-500"
+        class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500"
       >
         <span class="text-sm font-medium leading-none text-white">{{
           totalCardList
@@ -53,6 +53,7 @@ const cards = computed({
             :id="element.id"
             :body="element.body"
             :contents="element.contents"
+            :date="element.date"
             :cardIndex="index"
             :listIndex="props.listIndex"
           />

@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
+import BaseTooltip from "./common/BaseTooltip.vue";
 
 const props = defineProps({
   id: { type: Number },
@@ -39,6 +40,8 @@ const removeCardFromList = () => {
 };
 
 const openEditRef = ref(false);
+
+const showTooltipRef = ref(false);
 </script>
 <template>
   <CardEdit
@@ -68,7 +71,14 @@ const openEditRef = ref(false);
         @click="removeCardFromList"
         class="shadow rounded-xl w-6 h-6 bg-gray-900 flex items-center justify-center p-4"
       >
-        <i class="fas fa-trash rounded-full text-red-500"></i>
+        <div
+          class="relative"
+          @mouseenter="showTooltipRef = true"
+          @mouseleave="showTooltipRef = false"
+        >
+          <i class="fas fa-trash rounded-full text-red-500"></i>
+          <BaseTooltip :showTooltip="showTooltipRef" tooltipText="Delete" />
+        </div>
       </div>
     </div>
   </div>

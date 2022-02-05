@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 
 const savedLists = localStorage.getItem("trello-lists");
-const savedID = localStorage.getItem("countID")
+const savedID = localStorage.getItem("countID");
 
 export const useStore = defineStore("store", {
   //Stateには初期値を返す関数を定義
   state: () => {
     return {
       lists: savedLists ? JSON.parse(savedLists) : [],
-      countID: savedID ? JSON.parse(savedID) : 0
+      countID: savedID ? JSON.parse(savedID) : 0,
     };
   },
   //gettersはstate及び他の getterへのアクセス可能
@@ -17,7 +17,10 @@ export const useStore = defineStore("store", {
     totalCardCounts(state) {
       let count = 0;
       for (const element of state.lists) {
-        count += element.cards.length;
+        const filterCards = element.cards.filter((card) => {
+          return card.done !== true;
+        });
+        count += filterCards.length;
       }
       return count;
     },
@@ -38,7 +41,7 @@ export const useStore = defineStore("store", {
         id: this.countID,
         body: body,
       });
-      localStorage.setItem("countID",JSON.stringify(this.countID))
+      localStorage.setItem("countID", JSON.stringify(this.countID));
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     removeCardFromList(cardIndex, listIndex) {
@@ -49,10 +52,11 @@ export const useStore = defineStore("store", {
       this.lists = lists;
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
-    editCard(listIndex, cardIndex, body, contents, date) {
+    editCard(listIndex, cardIndex, body, contents, date, done) {
       this.lists[listIndex].cards[cardIndex].body = body;
       this.lists[listIndex].cards[cardIndex].contents = contents;
-      this.lists[listIndex].cards[cardIndex].date = date
+      this.lists[listIndex].cards[cardIndex].date = date;
+      this.lists[listIndex].cards[cardIndex].done = done;
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     searchListFromListIndex(listIndex) {

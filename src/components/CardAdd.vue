@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
 
 const props = defineProps({
@@ -9,13 +9,20 @@ const body = ref("");
 const isEditing = ref(false);
 const isOpenForm = ref(false);
 const errorMessage = ref("");
+const cardTitleInput = ref(null);
 
 const store = useStore();
 
-const addCardToList = () => {
+const addCardToList = (event) => {
+  // 日本語入力中のEnterキー操作は無効にする
+  if (event.keyCode) {
+    if (event.keyCode !== 13) return;
+  }
+
   if (body.value !== "") {
     store.addCardToList(body.value, props.listIndex);
     body.value = "";
+    errorMessage.value = "";
     isOpenForm.value = false;
   } else {
     errorMessage.value = "タイトルには必ず文字を入れてください";
@@ -38,11 +45,15 @@ const classList = computed(() => {
   }
   return classList;
 });
+
+onUpdated(() => {
+  cardTitleInput.value.focus();
+});
 </script>
 <template>
   <div class="relative" @click="isOpenForm = !isOpenForm">
     <span class="text-sm font-medium leading-none text-white">+</span>
-    Add item
+    Add Card
   </div>
   <form
     v-show="isOpenForm"
@@ -57,6 +68,7 @@ const classList = computed(() => {
       <input
         type="text"
         v-model="body"
+        ref="cardTitleInput"
         class="text-input mt-1 py-3 px-4 text-black w-full"
         @keydown.enter="addCardToList"
         @focusin="isEditing = true"

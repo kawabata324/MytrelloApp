@@ -1,12 +1,14 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
 
 const newBody = ref("");
 const newContents = ref("");
 const newDeadline = ref("");
+const newDone = ref(false);
 const errorMessage = ref("");
 const moreOptionRef = ref(false);
+const titleInput = ref(null);
 
 const store = useStore();
 
@@ -60,14 +62,34 @@ const dateComputed = computed({
   },
 });
 
-const editCard = () => {
+const doneComputed = computed({
+  get: () => {
+    const done = store.lists[props.listIndex].cards[props.cardIndex].done;
+    newDone.value = done;
+    if (done !== undefined) {
+      return done;
+    } else {
+      return false;
+    }
+  },
+  set: (newValue) => {
+    newDone.value = newValue;
+  },
+});
+
+const editCard = (event) => {
+  if (event.keyCode) {
+    //日本語入力中のEnterを無視する
+    if (event.keyCode !== 13) return;
+  }
   if (newBody.value !== "") {
     store.editCard(
       props.listIndex,
       props.cardIndex,
       newBody.value,
       newContents.value,
-      newDeadline.value
+      newDeadline.value,
+      newDone.value
     );
     isOpenForm.value = false;
   } else {
@@ -91,6 +113,10 @@ const listName = computed(() => {
   }
   return title;
 });
+
+onUpdated(() => {
+  titleInput.value.focus();
+});
 </script>
 <template>
   <form
@@ -108,6 +134,7 @@ const listName = computed(() => {
       <p class="text-red-500">{{ errorMessage }}</p>
       <input
         type="text"
+        ref="titleInput"
         v-model="bodyComputed"
         class="text-input mt-2 py-3 px-4 w-full text-black"
         @keydown.enter="editCard"
@@ -129,12 +156,12 @@ const listName = computed(() => {
     >
       <div class="w-full">
         <label id="date" class="mt-1 text-white text-lg flex gap-2 items-center"
-          ><i class="fas fa-align-right"></i>
+          ><i class="fas fa-clock"></i>
           <p>DeadLine</p></label
         >
         <input
           type="date"
-          form="date"
+          for="date"
           v-model="dateComputed"
           @keydown.enter="editCard"
           class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
@@ -150,9 +177,23 @@ const listName = computed(() => {
         <textarea
           type="text"
           v-model="contentsComputed"
-          @keydown.enter="editCard"
           class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
         />
+      </div>
+      <div class="w-full">
+        <label id="done" class="mt-1 text-white text-lg flex gap-2 items-center"
+          ><i class="fas fa-check-circle"></i>
+          <p>Done</p></label
+        >
+        <select
+          for="done"
+          v-model="doneComputed"
+          @keydown.enter="editCard"
+          class="text-input w-full mt-2 font-light text-black leading-relaxed tracking-wider px-2"
+        >
+          <option :value="false">In progress</option>
+          <option :value="true">Done</option>
+        </select>
       </div>
     </div>
     <div class="flex m-4 justify-between w-10/12">

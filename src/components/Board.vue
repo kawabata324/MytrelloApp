@@ -33,7 +33,7 @@ const movingList = () => {
           @end="movingList"
         >
           <template #item="{ element, index }">
-            <div>
+            <div class="flex gap-1">
               <List
                 :title="element.title"
                 :listIndex="index"

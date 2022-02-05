@@ -77,7 +77,11 @@ const doneComputed = computed({
   },
 });
 
-const editCard = () => {
+const editCard = (event) => {
+  if (event.keyCode) {
+    //日本語入力中のEnterを無視する
+    if (event.keyCode !== 13) return;
+  }
   if (newBody.value !== "") {
     store.editCard(
       props.listIndex,
@@ -173,7 +177,6 @@ onUpdated(() => {
         <textarea
           type="text"
           v-model="contentsComputed"
-          @keydown.enter="editCard"
           class="text-input w-full mt-1 h-96 font-light text-black leading-relaxed tracking-wider px-2"
         />
       </div>

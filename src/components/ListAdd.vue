@@ -14,7 +14,12 @@ const openAddListForm = () => {
   isForm.value = !isForm.value;
 };
 
-const addList = () => {
+const addList = (event) => {
+  if (event.keyCode) {
+    //日本語入力中のEnterを無視する
+    if (event.keyCode !== 13) return;
+  }
+
   if (title.value) {
     store.addList(title.value);
     title.value = "";

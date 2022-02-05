@@ -1,5 +1,12 @@
 <script setup>
-import { computed, ref } from "vue";
+import {
+  computed,
+  reactive,
+  ref,
+  onMounted,
+  onUpdated,
+  onBeforeUpdate,
+} from "vue";
 import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
 import BaseTooltip from "./common/BaseTooltip.vue";
@@ -9,6 +16,7 @@ const props = defineProps({
   body: { type: String, required: true },
   contents: { type: String },
   date: { type: String },
+  done: { type: Boolean, default: false },
   listIndex: { type: Number, required: true },
   cardIndex: { type: Number, required: true },
 });
@@ -40,8 +48,44 @@ const removeCardFromList = () => {
 };
 
 const openEditRef = ref(false);
+const showDelTooltipRef = ref(false);
+const showDoneTooltipRef = ref(false);
+const finishCard = ref(false);
+const cardColor = ref("");
 
-const showTooltipRef = ref(false);
+const clickDoneCard = () => {
+  finishCard.value = !finishCard.value;
+  if (finishCard.value) {
+    cardColor.value = "bg-green-800";
+  } else if (!finishCard.value) {
+    cardColor.value = "bg-gray-800";
+  }
+  //localhostで保存されている値を保存する
+  store.editCard(
+    props.listIndex,
+    props.cardIndex,
+    props.body,
+    props.contents,
+    props.date,
+    finishCard.value
+  );
+};
+onMounted(() => {
+  finishCard.value = props.done;
+  if (finishCard.value) {
+    cardColor.value = "bg-green-800";
+  } else if (!finishCard.value) {
+    cardColor.value = "bg-gray-800";
+  }
+});
+onBeforeUpdate(() => {
+  finishCard.value = props.done;
+  if (finishCard.value) {
+    cardColor.value = "bg-green-800";
+  } else if (!finishCard.value) {
+    cardColor.value = "bg-gray-800";
+  }
+});
 </script>
 <template>
   <CardEdit
@@ -49,7 +93,7 @@ const showTooltipRef = ref(false);
     :listIndex="props.listIndex"
     :cardIndex="props.cardIndex"
   />
-  <div class="bg-gray-800 rounded-md w-64 my-2 py-3 px-3">
+  <div class="rounded-md w-64 my-2 py-3 px-3" :class="cardColor">
     <div class="flex justify-between items-center">
       <p>#{{ props.id }}</p>
       <div class="flex gap-1 items-center">
@@ -60,24 +104,42 @@ const showTooltipRef = ref(false);
     <div class="flex items-center text-white mt-2">
       <div class="body">
         <p
-          class="text-blue-500 hover:cursor-pointer text-2xl"
+          class="text-blue-600 hover:cursor-pointer text-2xl"
           @click="openEditRef = true"
         >
           {{ cutBody }}
         </p>
         <a class="text-sm">{{ cutContents }}</a>
       </div>
-      <div
-        @click="removeCardFromList"
-        class="shadow rounded-xl w-6 h-6 bg-gray-900 flex items-center justify-center p-4"
-      >
+      <div class="flex gap-2">
         <div
-          class="relative"
-          @mouseenter="showTooltipRef = true"
-          @mouseleave="showTooltipRef = false"
+          @click="clickDoneCard"
+          class="shadow rounded-xl w-6 h-6 bg-gray-900 opacity-75 flex items-center justify-center p-4"
         >
-          <i class="fas fa-trash rounded-full text-red-500"></i>
-          <BaseTooltip :showTooltip="showTooltipRef" tooltipText="Delete" />
+          <div
+            class="relative"
+            @mouseenter="showDoneTooltipRef = true"
+            @mouseleave="showDoneTooltipRef = false"
+          >
+            <i class="fas fa-check-circle bg-green-500 rounded-md"></i>
+            <BaseTooltip :showTooltip="showDoneTooltipRef" tooltipText="Done" />
+          </div>
+        </div>
+        <div
+          @click="removeCardFromList"
+          class="shadow rounded-xl w-6 h-6 bg-gray-900 opacity-75 flex items-center justify-center p-4"
+        >
+          <div
+            class="relative"
+            @mouseenter="showDelTooltipRef = true"
+            @mouseleave="showDelTooltipRef = false"
+          >
+            <i class="fas fa-trash rounded-full text-red-500"></i>
+            <BaseTooltip
+              :showTooltip="showDelTooltipRef"
+              tooltipText="Delete"
+            />
+          </div>
         </div>
       </div>
     </div>

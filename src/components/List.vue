@@ -62,6 +62,7 @@ const cutTitle = computed(() => {
             :body="element.body"
             :contents="element.contents"
             :date="element.date"
+            :done="element.done"
             :cardIndex="index"
             :listIndex="props.listIndex"
           />

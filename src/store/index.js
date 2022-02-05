@@ -49,10 +49,11 @@ export const useStore = defineStore("store", {
       this.lists = lists;
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
-    editCard(listIndex, cardIndex, body, contents, date) {
+    editCard(listIndex, cardIndex, body, contents, date, done) {
       this.lists[listIndex].cards[cardIndex].body = body;
       this.lists[listIndex].cards[cardIndex].contents = contents;
       this.lists[listIndex].cards[cardIndex].date = date
+      this.lists[listIndex].cards[cardIndex].done = done
       localStorage.setItem("trello-lists", JSON.stringify(this.lists));
     },
     searchListFromListIndex(listIndex) {

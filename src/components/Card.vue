@@ -1,12 +1,5 @@
 <script setup>
-import {
-  computed,
-  reactive,
-  ref,
-  onMounted,
-  onUpdated,
-  onBeforeUpdate,
-} from "vue";
+import { computed, ref, onMounted, onBeforeUpdate } from "vue";
 import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
 import BaseTooltip from "./common/BaseTooltip.vue";
@@ -24,7 +17,7 @@ const props = defineProps({
 const store = useStore();
 
 const cutBody = computed(() => {
-  const characterLimit = 10;
+  const characterLimit = 20;
   if (props.body.length > characterLimit) {
     return `${props.body.substring(0, characterLimit)}...`;
   }
@@ -32,7 +25,7 @@ const cutBody = computed(() => {
 });
 
 const cutContents = computed(() => {
-  const characterLimit = 10;
+  const characterLimit = 15;
   if (props.contents) {
     if (props.contents.length > characterLimit) {
       return `${props.contents.substring(0, characterLimit)}...`;
@@ -104,12 +97,12 @@ onBeforeUpdate(() => {
     <div class="flex items-center text-white mt-2">
       <div class="body">
         <p
-          class="text-blue-600 hover:cursor-pointer text-2xl"
+          class="text-blue-600 hover:cursor-pointer text-lg"
           @click="openEditRef = true"
         >
           {{ cutBody }}
         </p>
-        <a class="text-sm">{{ cutContents }}</a>
+        <a class="text-xs">{{ cutContents }}</a>
       </div>
       <div class="flex gap-2">
         <div

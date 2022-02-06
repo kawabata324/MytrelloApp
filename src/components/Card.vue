@@ -1,6 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, onBeforeUpdate, watch } from "vue";
-import { s } from "../../docs/assets/vendor.8b5ee2e8";
+import { computed, ref, onMounted, onBeforeUpdate } from "vue";
 import { useStore } from "../store/index";
 import CardEdit from "./CardEdit.vue";
 import BaseTooltip from "./common/BaseTooltip.vue";

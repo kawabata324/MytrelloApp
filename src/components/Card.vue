@@ -45,7 +45,6 @@ const showDelTooltipRef = ref(false);
 const showDoneTooltipRef = ref(false);
 const finishCard = ref(false);
 const cardColor = ref("");
-const date = ref(false);
 
 const clickDoneCard = () => {
   finishCard.value = !finishCard.value;

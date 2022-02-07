@@ -2,7 +2,7 @@
 import ListAdd from "./ListAdd.vue";
 import List from "./List.vue";
 import { useStore } from "../store";
-import { computed, watch } from "vue";
+import { computed, watch, onMounted } from "vue";
 import draggable from "vuedraggable";
 
 const store = useStore();
@@ -18,6 +18,7 @@ watch(store.lists, () => {
 const movingList = () => {
   store.updateLists(store.lists);
 };
+
 </script>
 
 <template>

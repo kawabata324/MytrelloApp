@@ -22,11 +22,6 @@ const registerUser = async () => {
     });
 };
 
-const test = async () => {
-  await Client.get("/test")
-    .then((res) => console.log(res))
-    .catch((e) => console.log(e));
-};
 </script>
 <template>
   <div
@@ -69,7 +64,6 @@ const test = async () => {
         登録
       </button>
     </form>
-    <button class="w-full p-2" @click.prevent="test">テスと</button>
   </div>
 </template>
 <style scoped></style>

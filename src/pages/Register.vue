@@ -8,13 +8,11 @@ const user = reactive({
   password: "",
 });
 
-const registerUser = () => {
-  Client.post("/v1/auth", {
-    data: {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    },
+const registerUser = async () => {
+  await Client.post("/v1/auth", {
+    name: user.name,
+    email: user.email,
+    password: user.password,
   })
     .then((res) => {
       console.log(res);

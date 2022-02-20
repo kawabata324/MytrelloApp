@@ -3,14 +3,14 @@ import { reactive } from "vue";
 import Client from "../api/client";
 
 const user = reactive({
-  name: "",
   email: "",
   password: "",
 });
 
+console.log(user.email)
+
 const registerUser = async () => {
   await Client.post("/v1/auth", {
-    name: user.name,
     email: user.email,
     password: user.password,
   })
@@ -20,6 +20,12 @@ const registerUser = async () => {
     .catch((e) => {
       console.log(e);
     });
+};
+
+const test = async () => {
+  await Client.get("/test")
+    .then((res) => console.log(res))
+    .catch((e) => console.log(e));
 };
 </script>
 <template>
@@ -46,27 +52,24 @@ const registerUser = async () => {
         <h3 class="text-gray-300 mt-3 text-lg">アカウントを作成</h3>
       </div>
       <input
-        type="text"
-        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black"
-        placeholder="名前を入力"
-        v-model="user.name"
-      />
-      <input
         type="email"
+        name="email"
         class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black"
         placeholder="メールアドレスを入力"
         v-model="user.email"
       />
       <input
         type="password"
+        name="password"
         class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black"
         placeholder="パスワードを入力"
         v-model="user.password"
       />
-      <button class="bg-blue-500 w-full p-2" @submit.prevent="registerUser">
+      <button class="bg-blue-500 w-full p-2" @click.prevent="registerUser">
         登録
       </button>
     </form>
+    <button class="w-full p-2" @click.prevent="test">テスと</button>
   </div>
 </template>
 <style scoped></style>

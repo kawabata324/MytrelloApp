@@ -5,6 +5,7 @@ import Client from "../api/client";
 const user = reactive({
   email: "",
   password: "",
+  name: ""
 });
 
 console.log(user.email)
@@ -13,6 +14,7 @@ const registerUser = async () => {
   await Client.post("/v1/auth", {
     email: user.email,
     password: user.password,
+    name: user.name
   })
     .then((res) => {
       console.log(res);
@@ -41,26 +43,33 @@ const registerUser = async () => {
     </div>
 
     <form
-      class="bg-black opacity-90 form-height w-2/3 shadow-md flex flex-col gap-10 items-center p-10 border border-gray-800"
+      class="bg-black opacity-90 form-height w-1/2 shadow-md flex flex-col gap-10 items-center p-10 border border-gray-800"
     >
       <div>
         <h3 class="text-gray-300 mt-3 text-lg">アカウントを作成</h3>
       </div>
       <input
+        type="text"
+        name="name"
+        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black lg:w-1/3"
+        placeholder="名前を入力"
+        v-model="user.name"
+      />
+      <input
         type="email"
         name="email"
-        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black"
+        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black lg:w-1/3"
         placeholder="メールアドレスを入力"
         v-model="user.email"
       />
       <input
         type="password"
         name="password"
-        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black"
+        class="border shadow-lg border-gray-300 w-full lg:w-1/3 px-5 py-2 text-black"
         placeholder="パスワードを入力"
         v-model="user.password"
       />
-      <button class="bg-blue-500 w-full p-2" @click.prevent="registerUser">
+      <button class="bg-blue-500 w-full p-2 lg:w-1/3" @click.prevent="registerUser">
         登録
       </button>
     </form>

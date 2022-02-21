@@ -4,8 +4,11 @@ import List from "./List.vue";
 import { useStore } from "../store";
 import { computed, watch, onMounted } from "vue";
 import draggable from "vuedraggable";
+import Auth from "../api/auth/register";
+import { useRouter } from "vue-router";
 
 const store = useStore();
+const router = useRouter();
 
 const totalCardCounts = computed(() => {
   return store.totalCardCounts;
@@ -18,7 +21,25 @@ watch(store.lists, () => {
 const movingList = () => {
   store.updateLists(store.lists);
 };
-
+onMounted(async () => {
+  if (
+    (localStorage.getItem("client") !== null) &
+    (localStorage.getItem("access-token") !== null) &
+    (localStorage.getItem("uid") !== null)
+  ) {
+    try {
+      await Auth.validated();
+    } catch {
+      //Todo alertに変更
+      console.log("認証に失敗");
+      router.push("/login");
+    }
+  } else {
+    //Todo alertに変更
+    console.log("認証に失敗");
+    router.push("/login");
+  }
+});
 </script>
 
 <template>

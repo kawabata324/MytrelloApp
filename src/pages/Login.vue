@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import BaseInput from "../components/common/BaseInput.vue";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
@@ -9,12 +9,6 @@ const router = useRouter();
 const user = reactive({
   email: "",
   password: "",
-  name: "",
-});
-
-const computedUserName = computed({
-  get: () => user.name,
-  set: (value) => (user.name = value),
 });
 
 const computedUserPassword = computed({
@@ -27,17 +21,16 @@ const computedUserEmail = computed({
   set: (value) => (user.email = value),
 });
 
-const registerUser = async () => {
-  try {
-    await Auth.registerUser(user);
+const loginUser = async () => {
+  try{
+    await Auth.loginUser(user);
     router.push("/");
-  } catch {
-    // Todo alertで出せるように変更
-    console.log("メールアドレスが登録されている可能性があります");
+  }
+  catch{
+    //Todo alertに変更する
+    console.log('パスワードかメールアドレスが違います')
   }
 };
-
-
 </script>
 
 <template>
@@ -51,18 +44,10 @@ const registerUser = async () => {
     >
       <div>
         <h3 class="text-gray-300 pb-8 text-2xl font-bold text-center">
-          Register Your Account
+          Login Your Account
         </h3>
       </div>
       <div class="flex flex-col gap-3">
-        <BaseInput
-          labelName="Name"
-          inputId="name"
-          inputType="text"
-          inputName="name"
-          inputPlaceholder="Name"
-          v-model:value="computedUserName"
-        />
         <BaseInput
           labelName="Email"
           inputId="email"
@@ -82,9 +67,9 @@ const registerUser = async () => {
       </div>
       <button
         class="mt-8 bg-blue-900 w-full py-2 rounded-md"
-        @click.prevent="registerUser"
+        @click.prevent="loginUser"
       >
-        Create Account
+        Login
       </button>
     </form>
   </div>

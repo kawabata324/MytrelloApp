@@ -1,20 +1,34 @@
 <script setup>
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import Client from "../api/client";
+import BaseInput from "../components/common/BaseInput.vue";
 
 const user = reactive({
   email: "",
   password: "",
-  name: ""
+  name: "",
 });
 
-console.log(user.email)
+const computedUserName = computed({
+  get: () => user.name,
+  set: (value) => (user.name = value),
+});
+
+const computedUserPassword = computed({
+  get: () => user.password,
+  set: (value) => (user.password = value),
+});
+
+const computedUserEmail = computed({
+  get: () => user.email,
+  set: (value) => (user.email = value),
+});
 
 const registerUser = async () => {
   await Client.post("/v1/auth", {
     email: user.email,
     password: user.password,
-    name: user.name
+    name: user.name,
   })
     .then((res) => {
       console.log(res);
@@ -23,54 +37,49 @@ const registerUser = async () => {
       console.log(e);
     });
 };
-
 </script>
 <template>
   <div
-    class="min-h-full flex flex-col items-center gap-10 py-12 px-4 sm:px-6 lg:px-8 max-h-full"
+    class="mt-20"
   >
-    <div class="max-w-md w-full space-y-8">
-      <div>
-        <div class="flex items-center justify-center gap-2">
-          <img
-            class="h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h1 class="text-2xl font-bold">Keep Making Effort</h1>
+        <div class="">
+          <h1 class="text-2xl font-bold text-center">Keep Making Effort</h1>
         </div>
-      </div>
-    </div>
 
     <form
-      class="bg-black opacity-90 form-height w-1/2 shadow-md flex flex-col gap-10 items-center p-10 border border-gray-800"
+      class="bg-black opacity-90 shadow-md w-96 p-10 border border-gray-800 rounded-md mx-auto mt-10"
     >
       <div>
-        <h3 class="text-gray-300 mt-3 text-lg">アカウントを作成</h3>
+        <h3 class="text-gray-300 pb-8 text-2xl font-bold text-center">Register Your Account</h3>
       </div>
-      <input
-        type="text"
-        name="name"
-        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black lg:w-1/3"
-        placeholder="名前を入力"
-        v-model="user.name"
-      />
-      <input
-        type="email"
-        name="email"
-        class="border shadow-lg border-gray-300 w-full px-5 py-2 text-black lg:w-1/3"
-        placeholder="メールアドレスを入力"
-        v-model="user.email"
-      />
-      <input
-        type="password"
-        name="password"
-        class="border shadow-lg border-gray-300 w-full lg:w-1/3 px-5 py-2 text-black"
-        placeholder="パスワードを入力"
-        v-model="user.password"
-      />
-      <button class="bg-blue-500 w-full p-2 lg:w-1/3" @click.prevent="registerUser">
-        登録
+      <div class="flex flex-col gap-3">
+        <BaseInput
+          labelName="Name"
+          inputId="name"
+          inputType="text"
+          inputName="name"
+          inputPlaceholder="Name"
+          v-model:value="computedUserName"
+        />
+        <BaseInput
+          labelName="Email"
+          inputId="email"
+          inputType="email"
+          inputName="email"
+          inputPlaceholder="Email"
+          v-model:value="user.email"
+        />
+        <BaseInput
+          labelName="Password"
+          inputId="password"
+          inputType="password"
+          inputName="password"
+          inputPlaceholder="Password"
+          v-model:value="computedUserPassword"
+        />
+      </div>
+      <button class="mt-8 bg-blue-900 w-full py-2 rounded-md" @click.prevent="registerUser">
+        Create Account
       </button>
     </form>
   </div>

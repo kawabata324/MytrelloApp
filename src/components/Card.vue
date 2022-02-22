@@ -71,6 +71,7 @@ onMounted(() => {
     cardColor.value = "bg-gray-800";
   }
 });
+
 onBeforeUpdate(() => {
   finishCard.value = props.done;
   if (finishCard.value) {
@@ -78,6 +79,16 @@ onBeforeUpdate(() => {
   } else if (!finishCard.value) {
     cardColor.value = "bg-gray-800";
   }
+});
+
+const dateComputed = computed({
+  get: () => {
+    return store.lists[props.listIndex].cards[props.cardIndex].date ===
+      undefined
+      ? false
+      : true;
+  },
+  set: () => {},
 });
 </script>
 <template>
@@ -90,7 +101,7 @@ onBeforeUpdate(() => {
     <div class="flex justify-between items-center">
       <p>#{{ props.id }}</p>
       <div class="flex gap-1 items-center">
-        <i class="fas fa-clock text-white" v-show="props.date"></i>
+        <i class="fas fa-clock text-white" v-show="dateComputed"></i>
         <p>{{ props.date }}</p>
       </div>
     </div>

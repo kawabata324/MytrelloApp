@@ -6,6 +6,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import router from "./router";
+import Notifications from "@kyvg/vue3-notification";
 
 const pinia = createPinia();
 
@@ -15,5 +17,7 @@ dom.watch();
 createApp(App)
   .use(Style)
   .use(pinia)
+  .use(router)
+  .use(Notifications)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

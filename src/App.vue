@@ -1,11 +1,7 @@
-<script setup>
-import Board from "./components/Board.vue";
-import CardEdit from "./components/CardEdit.vue";
-</script>
-
 <template>
   <div  id="app">
-    <Board />
+    <router-view></router-view>
+    <notifications  position="bottom right"/>
   </div>
 </template>
 

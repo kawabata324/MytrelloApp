@@ -2,7 +2,7 @@
 import { useStore } from "../store/index";
 import CardAdd from "./CardAdd.vue";
 import Card from "./Card.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import draggable from "vuedraggable";
 
 const props = defineProps({
@@ -32,19 +32,43 @@ const cards = computed({
   },
 });
 
-const cutTitle = computed(() => {
-  const characterLimit = 10;
-  if (props.title.length > characterLimit) {
-    return `${props.title.substring(0, characterLimit)}...`;
-  }
-  return props.title;
+const editTitleRef = ref(false);
+
+const cutTitle = computed({
+  get: () => {
+    const characterLimit = 10;
+    if (props.title.length > characterLimit) {
+      return `${props.title.substring(0, characterLimit)}...`;
+    }
+    return props.title;
+  },
+  set: (newListTitle) => {
+    store.lists[props.listIndex].title = newListTitle;
+  },
 });
+
+const changeListTitle = (e) => {
+  if(e.keyCode !== 13) return;
+  editTitleRef.value = false
+};
 </script>
 
 <template>
   <div class="list bg-black list-border-width border-white">
-    <div class="w-72 flex justify-start items-center">
-      <p class="list-title">{{ cutTitle }}</p>
+    <div class="w-72 flex justify-start gap-2 items-center">
+      <p
+        class="text-lg font-bold p-15"
+        v-show="!editTitleRef"
+        @click="editTitleRef = !editTitleRef"
+      >
+        {{ cutTitle }}
+      </p>
+      <input
+        v-show="editTitleRef"
+        v-model="cutTitle"
+        class="font-sm bg-black border-blue-500"
+        @keydown.enter="changeListTitle"
+      />
       <span
         class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500"
       >

@@ -3,6 +3,7 @@ import { computed, reactive, ref } from "vue";
 import BaseInput from "../components/common/BaseInput.vue";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
+import { notify } from "@kyvg/vue3-notification";
 
 const router = useRouter();
 
@@ -22,13 +23,20 @@ const computedUserEmail = computed({
 });
 
 const loginUser = async () => {
-  try{
+  try {
     await Auth.loginUser(user);
     router.push("/");
-  }
-  catch{
-    //Todo alertに変更する
-    console.log('パスワードかメールアドレスが違います')
+    notify({
+      type: "success",
+      title: "ログイン成功",
+      text: "ログインに成功しました。",
+    });
+  } catch {
+    notify({
+      type: "error",
+      title: "ログイン失敗",
+      text: "ログインに失敗しました。パスワードかメールアドレスが間違っている可能性があります",
+    });
   }
 };
 </script>

@@ -3,6 +3,7 @@ import { computed, reactive } from "vue";
 import BaseInput from "../components/common/BaseInput.vue";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
+import { notify } from "@kyvg/vue3-notification";
 
 const router = useRouter();
 
@@ -28,24 +29,35 @@ const computedUserEmail = computed({
 });
 
 const registerUser = async () => {
-  try {
-    await Auth.registerUser(user);
-    router.push("/");
-  } catch {
-    // Todo alertで出せるように変更
-    console.log("メールアドレスが登録されている可能性があります");
+  if (user.name && user.email && user.password) {
+    try {
+      await Auth.registerUser(user);
+      router.push("/");
+      notify({
+        type: "success",
+        title: "登録成功",
+        text: "登録に成功しました。",
+      });
+    } catch {
+      notify({
+        type: "error",
+        title: "登録失敗",
+        text: "登録に失敗しました。パスワードが短すぎるか、メールアドレスが既に登録されている可能性があります",
+      });
+    }
+  } else {
+    notify({
+      type: "error",
+      title: "登録失敗",
+      text: "登録に失敗しました。パスワードが短すぎるか、メールアドレスが既に登録されている可能性があります",
+    });
   }
 };
-
-
 </script>
 
 <template>
   <div class="mt-20">
-    <div class="">
-      <h1 class="text-2xl font-bold text-center">Keep Making Effort</h1>
-    </div>
-
+    <h1 class="text-2xl font-bold text-center">Keep Making Effort</h1>
     <form
       class="bg-black opacity-90 shadow-md w-96 p-10 border border-gray-800 rounded-md mx-auto mt-10"
     >

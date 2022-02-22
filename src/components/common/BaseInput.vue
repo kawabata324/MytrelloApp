@@ -1,5 +1,5 @@
 <script setup>
-import { computed, toRefs } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   labelName: { type: String },
@@ -7,6 +7,7 @@ const props = defineProps({
   inputName: { type: String },
   inputId: { type: String },
   inputPlaceholder: { type: String },
+  inputRequired: { type: Boolean, default: true },
   value: { type: String },
 });
 
@@ -27,6 +28,7 @@ const valueComputed = computed({
       class="border shadow-lg border-gray-300 px-5 py-2 text-black rounded-lg"
       :placeholder="props.inputPlaceholder"
       v-model="valueComputed"
+      :required="props.inputRequired"
     />
   </div>
 </template>

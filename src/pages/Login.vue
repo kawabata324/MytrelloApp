@@ -79,6 +79,12 @@ const loginUser = async () => {
       >
         Login
       </button>
+      <div class="flex flex-col items-center pt-8 gap-2">
+        <p>or</p>
+        <router-link to="/register" class="bg-blue-900 w-full rounded-md py-2 text-center">
+          register
+        </router-link>
+      </div>
     </form>
   </div>
 </template>

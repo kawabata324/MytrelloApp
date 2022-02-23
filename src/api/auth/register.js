@@ -3,7 +3,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 class Auth {
-
   static async registerUser(user) {
     await Client.post("/v1/auth", {
       email: user.email,
@@ -15,9 +14,6 @@ class Auth {
         localStorage.setItem("client", response.headers["client"]);
         localStorage.setItem("uid", response.headers["uid"]);
       })
-      .catch((e) => {
-        console.log(e);
-      });
   }
 
   static async loginUser(user) {
@@ -39,11 +35,7 @@ class Auth {
         client: localStorage.getItem("client"),
         "access-token": localStorage.getItem("access-token"),
       },
-    })
-      .then((res) => console.log(res))
-      .catch((e) => {
-        console.log(e);
-      });
+    });
   }
 }
 

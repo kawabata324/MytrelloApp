@@ -6,6 +6,7 @@ import { computed, watch, onMounted } from "vue";
 import draggable from "vuedraggable";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
+import { notify } from "@kyvg/vue3-notification";
 
 const store = useStore();
 const router = useRouter();
@@ -30,12 +31,14 @@ onMounted(async () => {
     try {
       await Auth.validated();
     } catch {
-      //Todo alertに変更
-      console.log("認証に失敗");
       router.push("/login");
     }
   } else {
-    //Todo alertに変更
+    notify({
+      type: "error",
+      title: "認証失敗",
+      text: "認証に失敗しました。再度ログインしてください",
+    });
     console.log("認証に失敗");
     router.push("/login");
   }

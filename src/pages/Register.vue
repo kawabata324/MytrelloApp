@@ -4,6 +4,7 @@ import BaseInput from "../components/common/BaseInput.vue";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
 import { notify } from "@kyvg/vue3-notification";
+import Test from "../api/test/test";
 
 const router = useRouter();
 
@@ -53,6 +54,11 @@ const registerUser = async () => {
     });
   }
 };
+
+const testAPI = () => {
+  const res = Test.test();
+  console.log(res)
+};
 </script>
 
 <template>
@@ -99,6 +105,13 @@ const registerUser = async () => {
         Create Account
       </button>
     </form>
+
+    <button
+      class="mt-8 bg-green-900 w-full py-2 rounded-md"
+      @click.prevent="testAPI"
+    >
+      Test
+    </button>
   </div>
 </template>
 <style scoped></style>

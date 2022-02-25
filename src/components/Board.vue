@@ -7,6 +7,8 @@ import draggable from "vuedraggable";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
 import { notify } from "@kyvg/vue3-notification";
+import Card from "../api/utils/card";
+import ListAPI from "../api/utils/list";
 
 const store = useStore();
 const router = useRouter();
@@ -43,11 +45,50 @@ onMounted(async () => {
     router.push("/login");
   }
 });
+const logoutUser = async () => {
+  const res = await Auth.logoutUser();
+  console.log(res);
+  router.push("/login");
+  notify({
+    type: "success",
+    title: "ログアウトしました",
+    text: "ログアウトしました。",
+  });
+};
+
+const getUserAllCards = () => {
+  const res = Card.getAllUserCard();
+  console.log(res);
+};
+
+const getLists = () => {
+  const res = ListAPI.getLists();
+  console.log(res);
+};
 </script>
 
 <template>
   <div>
     <header>KeepMakingEfforts</header>
+    <button
+      class="mt-8 bg-green-900 w-full py-2 rounded-md"
+      @click.prevent="logoutUser"
+    >
+      Logout
+    </button>
+    <!-- 全ての移行が済んだらコメントを外す -->
+    <!-- <button
+      class="mt-8 bg-red-900 w-full py-2 rounded-md"
+      @click.prevent="getUserAllCards"
+    >
+      GetUserAllCardsTest
+    </button> -->
+    <!-- <button
+      class="mt-8 bg-white text-black w-full py-2 rounded-md"
+      @click.prevent="getLists"
+    >
+      GetLists
+    </button> -->
     <main>
       <p class="info-line text-white">All: {{ totalCardCounts }} tasks</p>
       <div>

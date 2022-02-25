@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
+import List from "../api/utils/list";
 
 const title = ref("");
 const isEditing = ref(false);
@@ -46,10 +47,22 @@ const cancel = () => {
 onUpdated(() => {
   titleInput.value.focus();
 });
+
+const createList = () => {
+  const res = List.listCreate(title.value);
+  console.log(res)
+};
 </script>
 
 <template>
   <div class="relative w-64">
+    <!-- Todo 全ての移行が終わったらhiddenを外す -->
+    <button
+      class="mt-8 bg-blue-900 w-full py-2 rounded-md hidden"
+      @click.prevent="createList"
+    >
+      listCreate
+    </button>
     <div
       class="flex items-center justify-center border border-dashed bg-gray-600 gap-2 opacity-50"
       @click="openAddListForm"

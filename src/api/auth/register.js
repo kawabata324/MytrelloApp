@@ -8,12 +8,11 @@ class Auth {
       email: user.email,
       password: user.password,
       name: user.name,
-    })
-      .then((response) => {
-        localStorage.setItem("access-token", response.headers["access-token"]);
-        localStorage.setItem("client", response.headers["client"]);
-        localStorage.setItem("uid", response.headers["uid"]);
-      })
+    }).then((response) => {
+      localStorage.setItem("access-token", response.headers["access-token"]);
+      localStorage.setItem("client", response.headers["client"]);
+      localStorage.setItem("uid", response.headers["uid"]);
+    });
   }
 
   static async loginUser(user) {
@@ -36,6 +35,25 @@ class Auth {
         "access-token": localStorage.getItem("access-token"),
       },
     });
+  }
+
+  static async logoutUser() {
+    try {
+      const res = await Client.delete("/v1/auth/sign_out", {
+        headers: {
+          uid: localStorage.getItem("uid"),
+          client: localStorage.getItem("client"),
+          "access-token": localStorage.getItem("access-token"),
+        },
+      });
+      localStorage.removeItem("uid");
+      localStorage.removeItem("client");
+      localStorage.removeItem("access_token");
+      return { res, error: null };
+    } catch (e) {
+      console.log(e);
+      return { res: null, e };
+    }
   }
 }
 

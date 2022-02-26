@@ -1,12 +1,14 @@
 <script setup>
 import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
+import List from "../api/utils/list";
 
 const title = ref("");
 const isEditing = ref(false);
 const isForm = ref(false);
 const errorMessage = ref("");
 const titleInput = ref(null);
+const listApiId = ref("");
 
 const store = useStore();
 
@@ -46,10 +48,38 @@ const cancel = () => {
 onUpdated(() => {
   titleInput.value.focus();
 });
+
+const createList = async () => {
+  const res = await List.listCreate(title.value);
+  listApiId.value = res.data.id;
+  console.log(res.data.id)
+  console.log(listApiId.value)
+};
+
+const listDelete = async () => {
+  console.log(listApiId.value)
+  if (listApiId.value !== null){
+    const res = await List.removeList(listApiId.value);
+    console.log(res);
+  }
+};
 </script>
 
 <template>
   <div class="relative w-64">
+    <!-- Todo 全ての移行が終わったらコメントを外す -->
+    <!-- <button
+      class="mt-8 bg-blue-900 w-full py-2 rounded-md"
+      @click.prevent="createList"
+    >
+      listCreate
+    </button>
+    <button
+      class="mt-8 bg-red-900 w-full py-2 rounded-md"
+      @click.prevent="listDelete"
+    >
+      listDelete
+    </button> -->
     <div
       class="flex items-center justify-center border border-dashed bg-gray-600 gap-2 opacity-50"
       @click="openAddListForm"

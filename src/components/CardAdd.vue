@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, onUpdated } from "vue";
 import { useStore } from "../store/index";
+import Card from "../api/utils/card";
 
 const props = defineProps({
   listIndex: { type: Number, required: true },
@@ -49,8 +50,32 @@ const classList = computed(() => {
 onUpdated(() => {
   cardTitleInput.value.focus();
 });
+
+const createUserCard = () => {
+  const apiListIndex = 1;
+  const res = Card.createUserCard(body.value, apiListIndex);
+  console.log(res);
+};
+
+const deleteCard = () => {
+  const res = Card.destroyCard(1)
+  console.log(res)
+};
 </script>
 <template>
+  <!-- Todo全ての移行が完了したらコメントを外す -->
+  <!-- <button
+    class="mt-8 bg-yellow-900 w-full py-2 rounded-md"
+    @click.prevent="createUserCard"
+  >
+    createUserCardTest
+  </button> -->
+  <!-- <button
+    class="mt-8 bg-red-900 w-full py-2 rounded-md"
+    @click.prevent="deleteCard"
+  >
+    deleteCard
+  </button> -->
   <div class="relative" @click="isOpenForm = !isOpenForm">
     <span class="text-sm font-medium leading-none text-white">+</span>
     Add Card

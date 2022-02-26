@@ -59,8 +59,8 @@ const getLists = () => {
 </script>
 
 <template>
+  <Header/>
   <div>
-    <Header/>
     <!-- 全ての移行が済んだらコメントを外す -->
     <!-- <button
       class="mt-8 bg-red-900 w-full py-2 rounded-md"

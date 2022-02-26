@@ -5,6 +5,7 @@ import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
 import { notify } from "@kyvg/vue3-notification";
 import Test from "../api/test/test";
+import Header from "../components/common/Header.vue"
 
 const router = useRouter();
 
@@ -62,6 +63,7 @@ const testAPI = () => {
 </script>
 
 <template>
+  <Header/>
   <div class="mt-20">
     <h1 class="text-2xl font-bold text-center">Keep Making Effort</h1>
     <form

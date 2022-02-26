@@ -4,6 +4,7 @@ import BaseInput from "../components/common/BaseInput.vue";
 import Auth from "../api/auth/register";
 import { useRouter } from "vue-router";
 import { notify } from "@kyvg/vue3-notification";
+import Header from "../components/common/Header.vue"
 
 const router = useRouter();
 
@@ -42,6 +43,7 @@ const loginUser = async () => {
 </script>
 
 <template>
+  <Header/>
   <div class="mt-20">
     <div class="">
       <h1 class="text-2xl font-bold text-center">Keep Making Effort</h1>

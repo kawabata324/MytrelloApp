@@ -41,6 +41,17 @@ class Card {
       return { res: null, e };
     }
   }
+
+  static destroyCard(card_id) {
+    try {
+      const res = Client.delete(
+        `/cards/${card_id}`);
+      return res;
+    } catch (e) {
+      console.log(e);
+      return { res: null, e };
+    }
+  }
 }
 
 export default Card;

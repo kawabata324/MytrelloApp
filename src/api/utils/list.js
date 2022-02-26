@@ -18,7 +18,7 @@ class List {
           },
         }
       );
-      return { res, e: null };
+      return res;
     } catch (e) {
       console.log(e);
       return { res: null, e };
@@ -34,6 +34,15 @@ class List {
         },
       });
       return { res, e: null };
+    } catch (e) {
+      console.log(e);
+      return { res: null, e };
+    }
+  }
+  static removeList(list_id) {
+    try {
+      const res = Client.delete(`/lists/${list_id}`);
+      return res;
     } catch (e) {
       console.log(e);
       return { res: null, e };

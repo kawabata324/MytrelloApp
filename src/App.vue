@@ -1,7 +1,10 @@
+<script setup>
+</script>
+
 <template>
-  <div  id="app">
+  <div id="app">
     <router-view></router-view>
-    <notifications  position="bottom right"/>
+    <notifications position="bottom right" />
   </div>
 </template>
 

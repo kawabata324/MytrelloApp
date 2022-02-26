@@ -9,6 +9,7 @@ import { useRouter } from "vue-router";
 import { notify } from "@kyvg/vue3-notification";
 import Card from "../api/utils/card";
 import ListAPI from "../api/utils/list";
+import Header from "../components/common/Header.vue"
 
 const store = useStore();
 const router = useRouter();
@@ -69,7 +70,7 @@ const getLists = () => {
 
 <template>
   <div>
-    <header>KeepMakingEfforts</header>
+    <Header/>
     <button
       class="mt-8 bg-green-900 w-full py-2 rounded-md"
       @click.prevent="logoutUser"
